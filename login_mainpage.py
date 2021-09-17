@@ -56,7 +56,7 @@ def login_verify():
     if (len(email.get()) == 0 or len(password.get()) == 0):
         entry_empty()
     else:
-        email1 = email.get()
+        email1 = email.get().lower()
         password1 = password.get()
         email_entry.delete(0, END)
         password_entry.delete(0, END)
