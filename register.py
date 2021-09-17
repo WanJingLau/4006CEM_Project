@@ -83,12 +83,10 @@ def register_verify():
         else:
             entry("Email address registered before. Please enter a new email address.")
 
-
 def entry(entry):
     global entry_screen
     entry_screen = Toplevel(register_screen)
     entry_screen.title("Failed Register")
-    entry_screen.geometry("250x200")
     Label(entry_screen, text=entry).pack()
     Button(entry_screen, text="OK", command=delete_entry_screen).pack()
 
@@ -96,7 +94,6 @@ def delete_entry_screen():
     entry_screen.destroy()
 
 def register_user():
- 
     email_info = email.get().lower()
     username_info = username.get()
     password_info = password.get()
@@ -116,7 +113,6 @@ def register_success():
     global register_success_screen
     register_success_screen = Toplevel(register_screen)
     register_success_screen.title("Success")
-    register_success_screen.geometry("150x100")
     Label(register_success_screen, text="Register Success").pack()
     Button(register_success_screen, text="OK", command=delete_register_success).pack()
 
