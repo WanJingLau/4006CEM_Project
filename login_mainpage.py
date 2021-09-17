@@ -74,7 +74,6 @@ def login_success():
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
-    login_success_screen.geometry("150x100")
     Label(login_success_screen, text="Login Success").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
  
@@ -84,7 +83,6 @@ def user_password_not_recognised():
     global user_password_not_recog_screen
     user_password_not_recog_screen = Toplevel(login_screen)
     user_password_not_recog_screen.title("Failed Login")
-    user_password_not_recog_screen.geometry("250x200")
     Label(user_password_not_recog_screen, text="Wrong Email/ Invalid Password").pack()
     Button(user_password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
 
@@ -94,15 +92,13 @@ def entry_empty():
     global entry_empty_screen
     entry_empty_screen = Toplevel(login_screen)
     entry_empty_screen.title("Failed Login")
-    entry_empty_screen.geometry("250x200")
     Label(entry_empty_screen, text="Email/ Password is Empty.").pack()
     Button(entry_empty_screen, text="OK", command=delete_entry_empty).pack()
 
 # Deleting popups
  
 def delete_login_success():
-    login_success_screen.destroy()
- 
+    login_success_screen.destroy() 
  
 def delete_password_not_recognised():
     user_password_not_recog_screen.destroy()
