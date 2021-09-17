@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.constants import N
 from PIL import Image, ImageTk
 from register import register
+from forget_password import forget_password
 from db_conn import readFromDb
 
 def login():
@@ -41,7 +42,7 @@ def login():
     password_entry.place(x=80,y=380)
     lbl_forget_pw = Label(login_screen, text = txt_forget_pw, font = ("Helvetica", 12), foreground = "blue", cursor="hand2")
     lbl_forget_pw.place(x=80,y=420)
-    lbl_forget_pw.bind("<Button-1>", lambda e: user_password_not_recognised())
+    lbl_forget_pw.bind("<Button-1>", lambda e: forget_password())
     Button(login_screen, text=txt_login, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = login_verify).place(x=590,y=500)
     lbl_register_acc = Label(login_screen, text = txt_register_acc, font = ("Helvetica", 12), foreground = "blue", cursor="hand2")
     lbl_register_acc.place(x=575,y=550)
