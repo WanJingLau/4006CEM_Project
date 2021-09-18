@@ -1,6 +1,6 @@
 import pyodbc as db
 
-conn = db.connect(DRIVER='{ODBC Driver 17 for SQL Server}', Server="(local)\SQLEXPRESS", uid="ebook", pwd="ebook123",database="master",Trusted_Connection='yes').cursor()
+conn = db.connect(Driver="{ODBC Driver 17 for SQL Server}", Server="tcp:ebook4006.database.windows.net,1433", Database="ebookDB", Uid="ebook", Pwd="Wjwc4006", Encrypt="yes", TrustServerCertificate="no", ConnectionTimeout=30).cursor()
 
 def readFromDb(dbQuery):
     conn.execute(dbQuery)
