@@ -3,6 +3,7 @@ from tkinter.constants import N
 from PIL import Image, ImageTk
 from register import register
 from forget_password import forget_password
+from homePage import homepage
 from db_conn import readFromDb
 
 def login():
@@ -68,14 +69,15 @@ def login_verify():
         if result == None:
             user_password_not_recognised()
         else:
-            login_success()
+            #login_success()
+            homepage()
 
-def login_success():
-    global login_success_screen
-    login_success_screen = Toplevel(login_screen)
-    login_success_screen.title("Success")
-    Label(login_success_screen, text="Login Success").pack()
-    Button(login_success_screen, text="OK", command=delete_login_success).pack()
+#def login_success():
+#    global login_success_screen
+#    login_success_screen = Toplevel(login_screen)
+#    login_success_screen.title("Success")
+#    Label(login_success_screen, text="Login Success").pack()
+#    Button(login_success_screen, text="OK", command=delete_login_success).pack()
  
 # Designing popup for login invalid password
  
@@ -97,8 +99,8 @@ def entry_empty():
 
 # Deleting popups
  
-def delete_login_success():
-    login_success_screen.destroy() 
+#def delete_login_success():
+#    login_success_screen.destroy() 
  
 def delete_password_not_recognised():
     user_password_not_recog_screen.destroy()
