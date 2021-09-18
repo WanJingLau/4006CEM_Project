@@ -59,7 +59,3 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
-    delete_page_not_found_screen()
-
-def delete_page_not_found_screen():
-    page_not_found_screen.destroy()
