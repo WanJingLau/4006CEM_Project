@@ -99,20 +99,60 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
 
-    dbQueryInsert = """INSERT INTO dbo.Users (username, password_hash, email) 
-                       VALUES('"""+username_info+"""', 
-                               HASHBYTES('SHA2_512', '"""+password_info+"""'), 
-                               '"""+email_info+"""')"""
+    dbQueryInsertUser = """INSERT INTO dbo.Users (username, password_hash, email) 
+                           VALUES('"""+username_info+"""', 
+                                  HASHBYTES('SHA2_512', '"""+password_info+"""'), 
+                                  '"""+email_info+"""')"""
+
+    dbQueryDeleteUser = """DELETE FROM dbo.Users 
+                           WHERE email='"""+email_info+"""'
+                           AND username='"""+username_info+"""'"""
+
+    dbQueryInsertRole = """INSERT INTO dbo.UserRole (UserId, RoleId)
+                           SELECT U.Id, R.Id
+                           FROM dbo.Users U WITH(NOLOCK)
+                           OUTER APPLY
+                           (
+                                SELECT Id FROM dbo.Roles WITH(NOLOCK)
+                                WHERE Name = 'user'
+                           )R
+                           WHERE U.email = '"""+email_info+"""'"""
+
+    dbQueryDeleteRole = """DELETE FROM dbo.UserRole
+                           WHERE UserId = (
+                                            SELECT Id FROM dbo.Users WITH(NOLOCK)
+                                            WHERE email = '"""+email_info+"""'
+                                            AND username='"""+username_info+"""'
+                                          )"""
+
+    dbQueryInsertSetting = """INSERT INTO dbo.UserSetting (UserId, SettingId, isActive)
+                              SELECT U.Id, S.Id, 0
+                              FROM dbo.Users U WITH(NOLOCK)
+                              OUTER APPLY
+                              (
+                                  SELECT Id FROM dbo.Settings WITH(NOLOCK)
+                              )S
+                              WHERE U.email = '"""+email_info+"""'"""
     
-    result = insertUpdateDeleteToDb(dbQueryInsert)
-    if result == 1:
-        email_entry.delete(0, END)
-        username_entry.delete(0, END)
-        password_entry.delete(0, END)
-        confirm_password_entry.delete(0, END)
-        register_success()
-    else:
-        entry("Register failed. Please try again.")
+    result_insert_user = insertUpdateDeleteToDb(dbQueryInsertUser)
+    if result_insert_user == 1:
+        result_insert_role = insertUpdateDeleteToDb(dbQueryInsertRole)
+        if result_insert_role == 1:
+            result_insert_setting = insertUpdateDeleteToDb(dbQueryInsertSetting)
+            if result_insert_setting != None:
+                email_entry.delete(0, END)
+                username_entry.delete(0, END)
+                password_entry.delete(0, END)
+                confirm_password_entry.delete(0, END)
+                register_success()
+                return
+            else:
+                insertUpdateDeleteToDb(dbQueryDeleteRole)
+                insertUpdateDeleteToDb(dbQueryDeleteUser)
+        else:
+            insertUpdateDeleteToDb(dbQueryDeleteUser)
+
+    entry("Register failed. Please try again.")
 
 def register_success():
     global register_success_screen
