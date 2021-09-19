@@ -38,6 +38,7 @@ def login():
     Label(login_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=280)
     email_entry = Entry(login_screen, font = "Helvetica 12", textvariable = email, width=50)
     email_entry.place(x=80,y=310)
+    email_entry.focus_set()
     Label(login_screen, text = txt_password, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=350)
     password_entry = Entry(login_screen,font = "Helvetica 12", textvariable = password, width=50, show= '*')
     password_entry.place(x=80,y=380)
@@ -63,21 +64,15 @@ def login_verify():
         email_entry.delete(0, END)
         password_entry.delete(0, END)
     
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WHERE email = '"+email1+"' AND password_hash = HASHBYTES('SHA2_512', '"+password1+"')"
+        dbQuery = """SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) 
+                     WHERE email = '"""+email1+"""' 
+                     AND password_hash = HASHBYTES('SHA2_512', '"""+password1+"""')"""
         
         result = readFromDb(dbQuery)
         if result == None:
             user_password_not_recognised()
         else:
-            #login_success()
-            homepage()
-
-#def login_success():
-#    global login_success_screen
-#    login_success_screen = Toplevel(login_screen)
-#    login_success_screen.title("Success")
-#    Label(login_success_screen, text="Login Success").pack()
-#    Button(login_success_screen, text="OK", command=delete_login_success).pack()
+            homepage(email1)
  
 # Designing popup for login invalid password
  
@@ -89,7 +84,7 @@ def user_password_not_recognised():
     Button(user_password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
 
  # Designing popup for entry empty
- 
+
 def entry_empty():
     global entry_empty_screen
     entry_empty_screen = Toplevel(login_screen)
@@ -98,10 +93,7 @@ def entry_empty():
     Button(entry_empty_screen, text="OK", command=delete_entry_empty).pack()
 
 # Deleting popups
- 
-#def delete_login_success():
-#    login_success_screen.destroy() 
- 
+
 def delete_password_not_recognised():
     user_password_not_recog_screen.destroy()
 

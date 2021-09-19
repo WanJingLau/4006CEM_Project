@@ -1,9 +1,10 @@
+from settings import settings
 from tkinter import *
 from tkinter.constants import N
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
-def homepage():
+def homepage(email):
     global homepage_screen
     global homepage_icon
     global book_categories_icon
@@ -48,7 +49,6 @@ def homepage():
 
     homepage_screen.title(txt_homepage)
     homepage_screen.geometry(geometry_size)
-
 
 def page_not_found():
     global page_not_found_screen
