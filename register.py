@@ -77,7 +77,7 @@ def register_verify():
     elif agree.get() != 1:
         entry("Please tick to agree the Terms of Services and Privacy Policy.")
     else:
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WHERE email = '"+email.get().lower()+"'"
+        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
         result = readFromDb(dbQuery)
         if result == None:
             register_user()
