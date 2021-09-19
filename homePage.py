@@ -1,9 +1,10 @@
+from settings import settings
 from tkinter import *
 from tkinter.constants import N
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
-def homepage():
+def homepage(email):
     global homepage_screen
     global homepage_icon
     global book_categories_icon
@@ -44,11 +45,10 @@ def homepage():
     Label(homepage_screen, image = edit_profile_icon).place(x=100, y=500)
     Button(homepage_screen, text=txt_edit_profile, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=500)
     Label(homepage_screen, image = settings_icon).place(x=100, y=600)
-    Button(homepage_screen, text=txt_settings, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=600)
+    Button(homepage_screen, text=txt_settings, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = settings(email)).place(x=200,y=600)
 
     homepage_screen.title(txt_homepage)
     homepage_screen.geometry(geometry_size)
-
 
 def page_not_found():
     global page_not_found_screen
