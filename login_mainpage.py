@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from register import register
 from forget_password import forget_password
 from homePage import homepage
+from bookcategories import bookcategories
 from db_conn import readFromDb
 
 def login():
