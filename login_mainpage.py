@@ -38,6 +38,7 @@ def login():
     Label(login_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=280)
     email_entry = Entry(login_screen, font = "Helvetica 12", textvariable = email, width=50)
     email_entry.place(x=80,y=310)
+    email_entry.focus_set()
     Label(login_screen, text = txt_password, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=350)
     password_entry = Entry(login_screen,font = "Helvetica 12", textvariable = password, width=50, show= '*')
     password_entry.place(x=80,y=380)

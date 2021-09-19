@@ -42,7 +42,8 @@ def register():
     Label(register_screen, text = txt_field_required, font = ("Helvetica", 12, "bold"), foreground = "red").place(x=525, y = 130)
     Label(register_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 190) 
     email_entry = Entry(register_screen, font = "Helvetica 12", textvariable = email, width=50)
-    email_entry.place(x=80,y=220)  
+    email_entry.place(x=80,y=220)
+    email_entry.focus_set()  
     Label(register_screen, text = txt_screen_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
     username_entry = Entry(register_screen, font = "Helvetica 12", textvariable = username, width=50)
     username_entry.place(x=80,y=290) 
@@ -98,7 +99,11 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
 
-    dbQueryInsert = "INSERT INTO dbo.Users (username, password_hash, email) VALUES('"+username_info+"', HASHBYTES('SHA2_512', '"+password_info+"'), '"+email_info+"')"
+    dbQueryInsert = """INSERT INTO dbo.Users (username, password_hash, email) 
+                       VALUES('"""+username_info+"""', 
+                               HASHBYTES('SHA2_512', '"""+password_info+"""'), 
+                               '"""+email_info+"""')"""
+    
     result = insertUpdateDeleteToDb(dbQueryInsert)
     if result == 1:
         email_entry.delete(0, END)
