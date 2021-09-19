@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.constants import N
+from bookcategories import bookcategories
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
@@ -36,7 +37,7 @@ def homepage():
     Label(homepage_screen, image = homepage_icon).place(x=100, y=40)
     Label(homepage_screen, text = txt_homepage, font = ("Helvetica", 40, "bold"), foreground = "black").place(x=180, y = 40) 
     Label(homepage_screen, image = book_categories_icon).place(x=100, y=200)
-    Button(homepage_screen, text=txt_book_categories, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=200)
+    Button(homepage_screen, text=txt_book_categories, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = bookcategories).place(x=200,y=200)
     Label(homepage_screen, image = store_ebooks_icon).place(x=100, y=300)
     Button(homepage_screen, text=txt_store_books, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=300)
     Label(homepage_screen, image = upload_ebooks_icon).place(x=100, y=400)
