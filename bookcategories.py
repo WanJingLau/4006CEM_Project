@@ -4,8 +4,6 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def bookcategories():
     global book_categories_screen
-    global left_icon
-    global right_icon
     global book_categories_icon
     global search_entry
     global Book1_icon
@@ -22,8 +20,6 @@ def bookcategories():
     global romance
     book_categories_screen = Toplevel()
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((50, 50), Image.ANTIALIAS))
-    left_icon = ImageTk.PhotoImage(Image.open("left.png").resize((50, 50), Image.ANTIALIAS))
-    right_icon = ImageTk.PhotoImage(Image.open("right.png").resize((50, 50), Image.ANTIALIAS))
     Book1_icon = ImageTk.PhotoImage(Image.open("Book1.png").resize((180, 220), Image.ANTIALIAS))
     Book2_icon = ImageTk.PhotoImage(Image.open("Book2.png").resize((180, 220), Image.ANTIALIAS))
     Book3_icon = ImageTk.PhotoImage(Image.open("Book3.png").resize((180, 220), Image.ANTIALIAS))
@@ -48,34 +44,39 @@ def bookcategories():
  
     Label(book_categories_screen, image = book_categories_icon).place(x=100, y=30)
     Label(book_categories_screen, text = txt_book_categories, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
-    
+
     Label(book_categories_screen, image = Book1_icon).place(x=184, y=185)
-    Button(book_categories_screen, text= txt_action_Adventure, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=44,y=138)
+    Label(book_categories_screen, text = txt_action_Adventure, font = ("Helvetica", 15, "bold")).place(x=44, y=138)
     Button(book_categories_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=191,y=388)
     
     Label(book_categories_screen, image = Book2_icon).place(x=378, y=188)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=378,y=388)
    
     Label(book_categories_screen, image = Book3_icon).place(x=893, y=174)
-    Button(book_categories_screen, text = txt_horror, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=700,y=130)
+    Label(book_categories_screen, text = txt_horror, font = ("Helvetica", 15, "bold")).place(x=700, y=138)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=893,y=388)
     
     Label(book_categories_screen, image = Book4_icon).place(x=1071, y=185)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1071,y=388)
     
     Label(book_categories_screen, image = Book5_icon).place(x=186, y=496)
-    Button(book_categories_screen, text = txt_fantasy, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=29,y=446)
+    Label(book_categories_screen, text = txt_fantasy, font = ("Helvetica", 15, "bold")).place(x=44, y=446)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=186,y=704)
     
     Label(book_categories_screen, image = Book6_icon).place(x=372, y=496)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=372,y=704)
     
     Label(book_categories_screen, image = Book7_icon).place(x=893, y=485)
-    Button(book_categories_screen, text = txt_romance, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=700,y=446)
+    Label(book_categories_screen, text = txt_romance, font = ("Helvetica", 15, "bold")).place(x=700, y=446)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=898,y=704)
 
     Label(book_categories_screen, image = Book8_icon).place(x=1071, y=485)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1081,y=704)
+
+    Frame(book_categories_screen).place(x=17, y=138)
+    Frame(book_categories_screen).place(x=683, y=138)
+    Frame(book_categories_screen).place(x=17, y=457)
+    Frame(book_categories_screen).place(x=683, y=457)
 
     book_categories_screen.title(txt_book_categories)
     book_categories_screen.geometry(geometry_size)
