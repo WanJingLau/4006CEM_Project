@@ -31,6 +31,7 @@ def forget_password():
     Label(forget_pw_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
     email_entry = Entry(forget_pw_screen, font = "Helvetica 12", textvariable = email, width=50)
     email_entry.place(x=80,y=290)
+    email_entry.focus_set()
     Button(forget_pw_screen, text=txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = reset_verify).place(x=590,y=500) 
     
     forget_pw_screen.title(txt_title)
@@ -40,7 +41,7 @@ def reset_verify():
     if len(email.get()) == 0:
         entry("Email address is empty. Please enter an email address.")
     else:
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WHERE email = '"+email.get().lower()+"'"
+        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
         result = readFromDb(dbQuery)
         if result == None:
             email_entry.delete(0, END)
@@ -61,7 +62,10 @@ def delete_entry_screen():
 def reset_password():
     email_info = email.get().lower()
     new_pw = pw_generator()
-    dbQuery = "UPDATE dbo.Users SET password_hash = HASHBYTES('SHA2_512', '"+new_pw+"') WHERE email = '"+email_info+"'"
+    dbQuery = """UPDATE dbo.Users 
+                 SET password_hash = HASHBYTES('SHA2_512', '"""+new_pw+"""') 
+                 WHERE email = '"""+email_info+"""'"""
+    
     result = insertUpdateDeleteToDb(dbQuery)
     if result == 1:
         email_entry.delete(0, END)
@@ -81,7 +85,7 @@ def pw_generator():
 def send_email(email, password):
     sender_email = "ebook4006@gmail.com" 
     sender_password = "ebookwjwc"
-    dbQuery = "SELECT username FROM dbo.Users WHERE email = '"+email+"'"
+    dbQuery = "SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email+"'"
     username = readFromDb(dbQuery)
     message = MIMEMultipart()
     message["From"] = sender_email

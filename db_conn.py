@@ -6,6 +6,10 @@ def readFromDb(dbQuery):
     conn.execute(dbQuery)
     return conn.fetchone()
 
+def readAllFromDb(dbQuery):
+    conn.execute(dbQuery)
+    return conn.fetchall()
+
 def insertUpdateDeleteToDb(dbQuery):
     conn.execute(dbQuery)
     result = conn.rowcount

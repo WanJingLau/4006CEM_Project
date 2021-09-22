@@ -42,7 +42,8 @@ def register():
     Label(register_screen, text = txt_field_required, font = ("Helvetica", 12, "bold"), foreground = "red").place(x=525, y = 130)
     Label(register_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 190) 
     email_entry = Entry(register_screen, font = "Helvetica 12", textvariable = email, width=50)
-    email_entry.place(x=80,y=220)  
+    email_entry.place(x=80,y=220)
+    email_entry.focus_set()  
     Label(register_screen, text = txt_screen_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
     username_entry = Entry(register_screen, font = "Helvetica 12", textvariable = username, width=50)
     username_entry.place(x=80,y=290) 
@@ -76,7 +77,7 @@ def register_verify():
     elif agree.get() != 1:
         entry("Please tick to agree the Terms of Services and Privacy Policy.")
     else:
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WHERE email = '"+email.get().lower()+"'"
+        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
         result = readFromDb(dbQuery)
         if result == None:
             register_user()
@@ -98,16 +99,60 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
 
-    dbQueryInsert = "INSERT INTO dbo.Users (username, password_hash, email) VALUES('"+username_info+"', HASHBYTES('SHA2_512', '"+password_info+"'), '"+email_info+"')"
-    result = insertUpdateDeleteToDb(dbQueryInsert)
-    if result == 1:
-        email_entry.delete(0, END)
-        username_entry.delete(0, END)
-        password_entry.delete(0, END)
-        confirm_password_entry.delete(0, END)
-        register_success()
-    else:
-        entry("Register failed. Please try again.")
+    dbQueryInsertUser = """INSERT INTO dbo.Users (username, password_hash, email) 
+                           VALUES('"""+username_info+"""', 
+                                  HASHBYTES('SHA2_512', '"""+password_info+"""'), 
+                                  '"""+email_info+"""')"""
+
+    dbQueryDeleteUser = """DELETE FROM dbo.Users 
+                           WHERE email='"""+email_info+"""'
+                           AND username='"""+username_info+"""'"""
+
+    dbQueryInsertRole = """INSERT INTO dbo.UserRole (UserId, RoleId)
+                           SELECT U.Id, R.Id
+                           FROM dbo.Users U WITH(NOLOCK)
+                           OUTER APPLY
+                           (
+                                SELECT Id FROM dbo.Roles WITH(NOLOCK)
+                                WHERE Name = 'user'
+                           )R
+                           WHERE U.email = '"""+email_info+"""'"""
+
+    dbQueryDeleteRole = """DELETE FROM dbo.UserRole
+                           WHERE UserId = (
+                                            SELECT Id FROM dbo.Users WITH(NOLOCK)
+                                            WHERE email = '"""+email_info+"""'
+                                            AND username='"""+username_info+"""'
+                                          )"""
+
+    dbQueryInsertSetting = """INSERT INTO dbo.UserSetting (UserId, SettingId, isActive)
+                              SELECT U.Id, S.Id, 0
+                              FROM dbo.Users U WITH(NOLOCK)
+                              OUTER APPLY
+                              (
+                                  SELECT Id FROM dbo.Settings WITH(NOLOCK)
+                              )S
+                              WHERE U.email = '"""+email_info+"""'"""
+    
+    result_insert_user = insertUpdateDeleteToDb(dbQueryInsertUser)
+    if result_insert_user == 1:
+        result_insert_role = insertUpdateDeleteToDb(dbQueryInsertRole)
+        if result_insert_role == 1:
+            result_insert_setting = insertUpdateDeleteToDb(dbQueryInsertSetting)
+            if result_insert_setting != None:
+                email_entry.delete(0, END)
+                username_entry.delete(0, END)
+                password_entry.delete(0, END)
+                confirm_password_entry.delete(0, END)
+                register_success()
+                return
+            else:
+                insertUpdateDeleteToDb(dbQueryDeleteRole)
+                insertUpdateDeleteToDb(dbQueryDeleteUser)
+        else:
+            insertUpdateDeleteToDb(dbQueryDeleteUser)
+
+    entry("Register failed. Please try again.")
 
 def register_success():
     global register_success_screen
