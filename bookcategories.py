@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
+from bookdetails import bookdetails
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def bookcategories():
@@ -47,7 +48,7 @@ def bookcategories():
 
     Label(book_categories_screen, image = Book1_icon).place(x=184, y=185)
     Label(book_categories_screen, text = txt_action_Adventure, font = ("Helvetica", 15, "bold")).place(x=44, y=138)
-    Button(book_categories_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=191,y=388)
+    Button(book_categories_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = bookdetails).place(x=191,y=388)
     
     Label(book_categories_screen, image = Book2_icon).place(x=378, y=188)
     Button(book_categories_screen, text = txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=378,y=388)
