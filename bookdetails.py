@@ -1,3 +1,4 @@
+from store_ebooks import store_ebooks
 from tkinter import *
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
@@ -46,7 +47,7 @@ def bookdetails():
     Label(book_details_screen, text = txt_description, font = ("Helvetica", 15, )).place(x=307, y=499)
     Label(book_details_screen, text = txt_read_more, font = ("Helvetica", 15), foreground = "blue").place(x=307, y=603)
 
-    Button(book_details_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=307,y=655)
+    Button(book_details_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = store_ebooks).place(x=307,y=655)
     Button(book_details_screen, text= txt_store, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=646,y=655)
     Button(book_details_screen, text= txt_review, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=978,y=655)
 
