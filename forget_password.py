@@ -63,7 +63,7 @@ def reset_password():
     email_info = email.get().lower()
     new_pw = pw_generator()
     dbQuery = """UPDATE dbo.Users 
-                 SET password_hash = HASHBYTES('SHA2_512', '"""+new_pw+"""') 
+                 SET password_hash = HASHBYTES('SHA2_512', '"""+new_pw+"""')
                  WHERE email = '"""+email_info+"""'"""
     
     result = insertUpdateDeleteToDb(dbQuery)
@@ -83,7 +83,7 @@ def pw_generator():
     return password
 
 def send_email(email, password):
-    sender_email = "ebook4006@gmail.com" 
+    sender_email = "ebook4006@gmail.com"
     sender_password = "ebookwjwc"
     dbQuery = "SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email+"'"
     username = readFromDb(dbQuery)
