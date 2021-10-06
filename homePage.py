@@ -30,7 +30,7 @@ def homepage(email):
     txt_upload_books = "Upload E-books"
     txt_edit_profile = "Edit Profile"
 
-    Button(homepage_screen, text=txt_logout, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = page_not_found).place(x=1159,y=88)
+    Button(homepage_screen, text=txt_logout, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = logout).place(x=1159,y=88)
 
     Label(homepage_screen, image = homepage_icon).place(x=100, y=40)
     Label(homepage_screen, text = txt_homepage, font = ("Helvetica", 40, "bold"), foreground = "black").place(x=180, y = 40) 
@@ -42,7 +42,8 @@ def homepage(email):
     Button(homepage_screen, text=txt_upload_books, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = upload_ebooks).place(x=200,y=400)
     Label(homepage_screen, image = edit_profile_icon).place(x=100, y=500)
     Button(homepage_screen, text=txt_edit_profile, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_profile).place(x=200,y=500)
-
+    
+    show_lbl(email)
     homepage_screen.title(txt_homepage)
     homepage_screen.geometry(geometry_size)
 
@@ -53,5 +54,28 @@ def page_not_found():
     Label(page_not_found_screen, text="Page not found").pack()
     Button(page_not_found_screen, text="OK", command=delete_page_not_found).pack()
 
+def show_lbl(email):
+    dbQuery = """SELECT R.Name
+                 FROM dbo.Users U WITH(NOLOCK)
+                 INNER JOIN dbo.UserRole UR WITH(NOLOCK) ON UR.UserId = U.Id
+                 INNER JOIN dbo.Roles R WITH(NOLOCK) ON R.Id = UR.RoleId
+                 WHERE U.email = '"""+email+"""'"""
+    
+    result = readFromDb(dbQuery)
+    global editebooks_icon
+    global deleteebooks_icon
+    txt_edit_ebooks = "Edit E-Books"
+    txt_delete_ebooks = "Delete E-Books"
+    editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((50, 50), Image.ANTIALIAS))
+    deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((50, 50), Image.ANTIALIAS))
+    if result[0] == "admin":
+        Label(homepage_screen, image = editebooks_icon).place(x=100, y=600)
+        Button(homepage_screen, text = txt_edit_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=600)
+        Label(homepage_screen, image = deleteebooks_icon).place(x=100, y=700)
+        Button(homepage_screen, text = txt_delete_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=700)
+
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def logout():
+    homepage_screen.destroy()
