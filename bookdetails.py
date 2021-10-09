@@ -1,3 +1,4 @@
+from comment import comment
 from review import review
 from store_ebooks import store_ebooks
 from tkinter import *
@@ -18,9 +19,10 @@ def bookdetails():
     txt_read = "Read"
     txt_store = "Store"
     txt_review = "Review"
+    txt_comment = "View Comment"
     txt_book_name = "Book Name: Percy Jackson - Tome 3"
     txt_author = "Author - Rick Riordan"
-    txt_marks = "4.45   -   90 Ratings"
+    txt_marks = "4.45"
     txt_summary = "Summary: Monsters always kill demigods. Percy and his friends Annabeth, Grover and Talia find themselves facing a terrible Mantis."
     
     Label(book_details_screen, image = book_categories_icon).place(x=100, y=30)
@@ -32,6 +34,7 @@ def bookdetails():
     Label(book_details_screen, text = txt_marks, font = ("Helvetica", 15)).place(x=246, y=352)
     Label(book_details_screen, text = txt_summary, font = ("Helvetica", 15)).place(x=69, y=419)   
 
+    Button(book_details_screen, text= txt_comment, font = ("Helvetica", 15, "bold"), foreground="black", width=20, height=1, cursor="hand2", command = comment).place(x=362,y=350)
     Button(book_details_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=121,y=629)
     Button(book_details_screen, text= txt_store, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = store_ebooks).place(x=562,y=629)
     Button(book_details_screen, text= txt_review, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = review).place(x=1003,y=629)
