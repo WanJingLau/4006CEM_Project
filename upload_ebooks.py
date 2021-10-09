@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, filedialog, scrolledtext, messagebox
 from PIL import Image, ImageTk
-from db_conn import readFromDb, insertUpdateDeleteToDb
+from db_conn import insertUpdateBookToDb, readFromDb, insertUpdateDeleteToDb
 
 def upload_ebooks():
     global upload_ebooks_screen
@@ -68,8 +68,9 @@ def UploadAction():
     filename = filedialog.askopenfilename(parent = upload_ebooks_screen, initialdir = "/", title = "Select file", filetypes = [("PDF files","*.pdf")])
     if filename:
         lbl_no_file_chosen.config(text = filename) #change no file chosen text to file path
-        with open(filename, 'rb') as f:
-            bindata = f.read()
+
+def entry(entry):
+   messagebox.showerror("Failed Upload", entry, parent = upload_ebooks_screen)
 
 def book_verify():
     if len(book_name.get()) == 0:
@@ -80,8 +81,24 @@ def book_verify():
         entry("No Book Category is selected. Please select Book Category.")
     elif lbl_no_file_chosen.cget("text") == txt_no_file_chosen:
         entry(txt_no_file_chosen + ". Please select a PDF file to upload.")
-    elif len(summary_scrolledText.get()) == 0:
+    elif len(summary_scrolledText.get("1.0", "end-1c")) == 0:
         entry("Book Summary is empty. Please enter Book Summary.")
+    else:
+        add_book()
 
-def entry(entry):
-   messagebox.showerror("Failed Upload", entry, parent = upload_ebooks_screen)
+def add_book():
+    with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
+        bindata = f.read()
+
+    dbQuery = """INSERT INTO dbo.Books (Name, Category, Author, Summary, BookContent, isActive)
+                 VALUES('"""+book_name.get()+"""',
+                        '"""+search_combobox.get()+"""',
+                        '"""+author.get()+"""',
+                        '"""+summary_scrolledText.get("1.0", "end-1c")+"""',
+                        ?,1)"""
+    result = insertUpdateBookToDb(dbQuery, bindata)
+    if result == 1:
+        messagebox.showinfo("Success", "New Book Upload Successfully", parent = upload_ebooks_screen)
+        upload_ebooks_screen.destroy()
+    else:
+        entry("New Book Upload Failed. Please try again.")
