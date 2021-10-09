@@ -23,7 +23,7 @@ def homepage(email):
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((50, 50), Image.ANTIALIAS))
     upload_ebooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((50, 50), Image.ANTIALIAS))
     edit_profile_icon = ImageTk.PhotoImage(Image.open("profile.png").resize((50, 50), Image.ANTIALIAS))
-
+    
     txt_homepage = "Home Page"
     txt_logout = "Log Out"
     geometry_size = "1366x768"
@@ -44,7 +44,6 @@ def homepage(email):
     Button(homepage_screen, text=txt_upload_books, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = upload_ebooks).place(x=200,y=400)
     Label(homepage_screen, image = edit_profile_icon).place(x=100, y=500)
     Button(homepage_screen, text=txt_edit_profile, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_profile).place(x=200,y=500)
-    
     show_lbl(email)
     homepage_screen.title(txt_homepage)
     homepage_screen.geometry(geometry_size)
