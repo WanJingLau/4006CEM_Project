@@ -59,7 +59,7 @@ def register():
     Label(register_screen, text = txt_have_account, font = ("Helvetica", 12, "bold")).place(x=550, y = 590)
     lbl_sign_in = Label(register_screen, text = txt_sign_in, font = ("Helvetica", 12, "bold"), cursor="hand2",foreground = "blue")
     lbl_sign_in.place(x=750, y = 590)
-    lbl_sign_in.bind("<Button-1>", lambda e: delete_register_screen())
+    lbl_sign_in.bind("<Button-1>", lambda e: register_screen.destroy())
     
     register_screen.title(txt_title)
     register_screen.state("zoomed")
