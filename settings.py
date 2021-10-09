@@ -50,6 +50,7 @@ def settings(email):
     #getUserSetting(email)
 
     settings_screen.title(txt_title)
+    settings_screen.state("zoomed")
     settings_screen.geometry(geometry_size)
 
 def getNameDefinition(email):

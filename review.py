@@ -24,6 +24,7 @@ def review():
     Label(review_screen, text = txt_comments, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=60, y=218)
 
     review_screen.title(txt_review)
+    review_screen.state("zoomed")
     review_screen.geometry(geometry_size)
 
 def page_not_found():

@@ -1,6 +1,7 @@
 import random
 import smtplib
 from tkinter import *
+from tkinter import messagebox
 from tkinter.constants import N
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
@@ -35,6 +36,7 @@ def forget_password():
     Button(forget_pw_screen, text=txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = reset_verify).place(x=590,y=500) 
     
     forget_pw_screen.title(txt_title)
+    forget_pw_screen.state("zoomed")
     forget_pw_screen.geometry(geometry_size)
 
 def reset_verify():
@@ -50,14 +52,7 @@ def reset_verify():
             reset_password()
 
 def entry(entry):
-    global entry_screen
-    entry_screen = Toplevel(forget_pw_screen)
-    entry_screen.title("Failed Reset")
-    Label(entry_screen, text=entry).pack()
-    Button(entry_screen, text="OK", command=delete_entry_screen).pack()
-
-def delete_entry_screen():
-    entry_screen.destroy()
+    messagebox.showerror("Failed Reset", entry, parent = forget_pw_screen)
 
 def reset_password():
     email_info = email.get().lower()
@@ -112,16 +107,5 @@ Thanks.
     server.quit()
 
 def reset_success():
-    global reset_success_screen
-    reset_success_screen = Toplevel(forget_pw_screen)
-    reset_success_screen.title("Success")
-    Label(reset_success_screen, text="""Password reset success. 
-    An email has been sent. Kindly check your email.""").pack()
-    Button(reset_success_screen, text="OK", command=delete_reset_success).pack()
-
-def delete_reset_success():
-    reset_success_screen.destroy()
-    delete_forget_pw_screen()
-
-def delete_forget_pw_screen():
+    messagebox.showinfo("Success", "Password reset success. An email has been sent. Kindly check your email.", parent = forget_pw_screen)
     forget_pw_screen.destroy()

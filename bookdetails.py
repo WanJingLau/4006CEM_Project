@@ -40,6 +40,7 @@ def bookdetails():
     Button(book_details_screen, text= txt_review, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = review).place(x=1003,y=629)
 
     book_details_screen.title(txt_book_details)
+    book_details_screen.state("zoomed")
     book_details_screen.geometry(geometry_size)
 
 

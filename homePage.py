@@ -46,6 +46,7 @@ def homepage(email):
     Button(homepage_screen, text=txt_edit_profile, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_profile).place(x=200,y=500)
     show_lbl(email)
     homepage_screen.title(txt_homepage)
+    homepage_screen.state("zoomed")
     homepage_screen.geometry(geometry_size)
 
 def page_not_found():

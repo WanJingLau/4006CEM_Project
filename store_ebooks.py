@@ -30,6 +30,7 @@ def store_ebooks():
     Label(store_ebooks_screen, text = txt_author, font = ("Helvetica", 15), foreground = "black").place(x=482, y=261)
 
     store_ebooks_screen.title(txt_store_ebooks)
+    store_ebooks_screen.state("zoomed")
     store_ebooks_screen.geometry(geometry_size)
 
 def page_not_found():
