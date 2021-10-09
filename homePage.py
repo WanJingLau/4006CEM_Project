@@ -1,3 +1,5 @@
+from delete_ebooks import delete_ebooks
+from edit_ebooks import edit_ebooks
 from edit_profile import edit_profile
 from settings import settings
 from tkinter import *
@@ -69,9 +71,9 @@ def show_lbl(email):
     deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((50, 50), Image.ANTIALIAS))
     if result[0] == "admin":
         Label(homepage_screen, image = editebooks_icon).place(x=100, y=600)
-        Button(homepage_screen, text = txt_edit_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=600)
+        Button(homepage_screen, text = txt_edit_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_ebooks).place(x=200,y=600)
         Label(homepage_screen, image = deleteebooks_icon).place(x=100, y=700)
-        Button(homepage_screen, text = txt_delete_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=200,y=700)
+        Button(homepage_screen, text = txt_delete_ebooks, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = delete_ebooks).place(x=200,y=700)
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
