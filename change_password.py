@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def change_password():
@@ -37,6 +38,7 @@ def change_password():
     Button(change_password_screen, text= txt_save, font = ("Helvetica", 15, "bold"), foreground="white", background="blue", width=16, height=1, cursor="hand2", command = password_verify(email)).place(x=587,y=658)
 
     change_password_screen.title(txt_change_password)
+    change_password_screen.state("zoomed")
     change_password_screen.geometry(geometry_size)
 
 def password_verify():
@@ -68,22 +70,8 @@ def password_verify():
             entry("Change password failed. Please retry.")
 
 def change_pw_success():
-    global change_pw_screen
-    change_pw_screen = Toplevel(change_password_screen)
-    change_pw_screen.title("Success")
-    Label(change_pw_screen, text="Change Password Successfully").pack()
-    Button(change_pw_screen, text="OK", command=delete_pw_screen).pack()
-
-def delete_pw_screen():
-    change_pw_screen.destroy()
+    messagebox.showinfo("Success", "Change Password Successfully", parent = change_password_screen)
     change_password_screen.destroy()
 
 def entry(entry):
-    global entry_screen
-    entry_screen = Toplevel(change_password_screen)
-    entry_screen.title("Failed Change Password")
-    Label(entry_screen, text=entry).pack()
-    Button(entry_screen, text="OK", command=delete_entry_screen).pack()
-
-def delete_entry_screen():
-    entry_screen.destroy()
+    messagebox.showerror("Failed Change Password", entry, parent = change_password_screen)

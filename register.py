@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
@@ -58,9 +59,10 @@ def register():
     Label(register_screen, text = txt_have_account, font = ("Helvetica", 12, "bold")).place(x=550, y = 590)
     lbl_sign_in = Label(register_screen, text = txt_sign_in, font = ("Helvetica", 12, "bold"), cursor="hand2",foreground = "blue")
     lbl_sign_in.place(x=750, y = 590)
-    lbl_sign_in.bind("<Button-1>", lambda e: delete_register_screen())
+    lbl_sign_in.bind("<Button-1>", lambda e: register_screen.destroy())
     
     register_screen.title(txt_title)
+    register_screen.state("zoomed")
     register_screen.geometry(geometry_size)
 
 def register_verify():
@@ -85,14 +87,7 @@ def register_verify():
             entry("Email address registered before. Please enter a new email address.")
 
 def entry(entry):
-    global entry_screen
-    entry_screen = Toplevel(register_screen)
-    entry_screen.title("Failed Register")
-    Label(entry_screen, text=entry).pack()
-    Button(entry_screen, text="OK", command=delete_entry_screen).pack()
-
-def delete_entry_screen():
-    entry_screen.destroy()
+    messagebox.showerror("Failed Register", entry, parent = register_screen)
 
 def register_user():
     email_info = email.get().lower()
@@ -155,15 +150,5 @@ def register_user():
     entry("Register failed. Please try again.")
 
 def register_success():
-    global register_success_screen
-    register_success_screen = Toplevel(register_screen)
-    register_success_screen.title("Success")
-    Label(register_success_screen, text="Register Success").pack()
-    Button(register_success_screen, text="OK", command=delete_register_success).pack()
-
-def delete_register_success():
-    register_success_screen.destroy()
-    delete_register_screen()
-
-def delete_register_screen():
+    messagebox.showinfo("Success", "Register Success", parent = register_screen)
     register_screen.destroy()

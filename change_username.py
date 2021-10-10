@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def change_username():
@@ -24,6 +25,7 @@ def change_username():
     new_username_entry.place(x=50,y=440)
     Button(change_username_screen, text= txt_save, font = ("Helvetica", 15, "bold"), foreground="white", background="blue", width=16, height=1, cursor="hand2", command = username_verify(email)).place(x=587,y=658)
     change_username_screen.title(txt_change_username)
+    change_username_screen.state("zoomed")
     change_username_screen.geometry(geometry_size)
 
 def getCurrentUsername():
@@ -46,22 +48,8 @@ def username_verify():
             entry("Change username failed. Please retry.")
 
 def change_username_success():
-    global change_username1_screen
-    change_username1_screen = Toplevel(change_username_screen)
-    change_username1_screen.title("Success")
-    Label(change_username1_screen, text="Change Username Successfully").pack()
-    Button(change_username1_screen, text="OK", command=delete_username_screen).pack()
-
-def delete_username_screen():
-    change_username1_screen.destroy()
+    messagebox.showinfo("Success", "Change Username Successfully", parent = change_username_screen)
     change_username_screen.destroy()
 
 def entry(entry):
-    global entry_screen
-    entry_screen = Toplevel(change_username_screen)
-    entry_screen.title("Failed Change Username")
-    Label(entry_screen, text=entry).pack()
-    Button(entry_screen, text="OK", command=delete_entry_screen).pack()
-
-def delete_entry_screen():
-    entry_screen.destroy()
+    messagebox.showerror("Failed Change Username", entry, parent = change_username_screen)

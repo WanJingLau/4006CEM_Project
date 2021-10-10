@@ -47,6 +47,7 @@ def bookcategories():
     Button(book_categories_screen, text = txt_romance, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = romance).place(x=900,y=632)
     
     book_categories_screen.title(txt_book_categories)
+    book_categories_screen.state("zoomed")
     book_categories_screen.geometry(geometry_size)
 
 def page_not_found():

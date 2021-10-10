@@ -1,56 +1,104 @@
 from tkinter import *
+from tkinter import ttk, filedialog, scrolledtext, messagebox
 from PIL import Image, ImageTk
-from db_conn import readFromDb, insertUpdateDeleteToDb
+from db_conn import insertUpdateBookToDb, readFromDb, insertUpdateDeleteToDb
 
 def upload_ebooks():
     global upload_ebooks_screen
     global uploadbooks_icon
-    global search_entry
+    global search_combobox
+    global book_name_entry
+    global author_entry
+    global summary_scrolledText
+    global book_name
+    global author
+    global filename
+    global bindata
+    global lbl_no_file_chosen
+    global txt_no_file_chosen
+    #variable declaration
     upload_ebooks_screen = Toplevel()
-    uploadbooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((50, 50), Image.ANTIALIAS))
-
+    uploadbooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((80, 80), Image.ANTIALIAS))
+    book_name = StringVar()
+    author = StringVar()
+    #text variable declaration
     txt_upload_ebooks = "Upload / Add E-books"
     geometry_size = "1366x768"
     txt_book_category = "Select Book Category"
-    txt_select = "Select Type"
     txt_book_name = "Enter Book Name"
     txt_author = "Enter Author"
-    txt_summary = "Enter Summary of book"
-    txt_content = "Content of book"
-    txt_file = "Insert pdf file"
+    txt_summary = "Enter Book Summary"
+    txt_content = "Book Content"
+    txt_file = "Upload File (.pdf)"
     txt_submit = "Submit"  
-
-    Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=100, y=30)
-    Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
-
-    Label(upload_ebooks_screen, text = txt_book_category, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=130)
-    search_entry = Entry(upload_ebooks_screen, font = "Helvetica 15", textvariable = txt_select, width=50)
-    search_entry.place(x=327,y=130)
-    Button(upload_ebooks_screen, text=txt_select, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = page_not_found).place(x=900,y=120) 
-
-    Label(upload_ebooks_screen, text = txt_book_name, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=180)
-    old_username_entry = Entry(upload_ebooks_screen, font = "Helvetica 12", width=50)
-    old_username_entry.place(x=50,y=220)
-    Label(upload_ebooks_screen, text = txt_author, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=295)
-    new_username_entry = Entry(upload_ebooks_screen, font = "Helvetica 12", width=50)
-    new_username_entry.place(x=50,y=340)
-    Label(upload_ebooks_screen, text = txt_summary, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=403)
-    confirm_username_entry = Entry(upload_ebooks_screen, font = "Helvetica 12", width=50)
-    confirm_username_entry.place(x=50,y=440)
-    Label(upload_ebooks_screen, text = txt_content, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=503)
-    Button(upload_ebooks_screen, text= txt_file, font = ("Helvetica", 15, "bold"), foreground="black", background="light grey", width=16, height=1, cursor="hand2", command = page_not_found).place(x=50,y=558)
-
-    Button(upload_ebooks_screen, text= txt_submit, font = ("Helvetica", 15, "bold"), foreground="white", background="blue", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1101,y=669)
-
+    txt_no_file_chosen = "No File Chosen"
+    #screen title,size, maximize windows
     upload_ebooks_screen.title(txt_upload_ebooks)
     upload_ebooks_screen.geometry(geometry_size)
+    upload_ebooks_screen.state("zoomed")
+    #page title
+    Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
+    Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70)
+    #book_name
+    Label(upload_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=130)
+    book_name_entry = Entry(upload_ebooks_screen, textvariable = book_name, font = "Helvetica 12", width=50)
+    book_name_entry.place(x=80,y=160)
+    book_name_entry.focus_set()
+    #author
+    Label(upload_ebooks_screen, text = txt_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=130)
+    author_entry = Entry(upload_ebooks_screen, textvariable = author, font = "Helvetica 12", width=50)
+    author_entry.place(x=580,y=160)
+    #book category
+    Label(upload_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=200)
+    search_combobox = ttk.Combobox(upload_ebooks_screen, values=("Action/Adventure", "Horror","Fantasy","Romance"), state = "readonly") 
+    search_combobox.place(x=80,y=230)
+    #upload file
+    Label(upload_ebooks_screen, text = txt_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=200)
+    Button(upload_ebooks_screen, text= txt_file, font = ("Helvetica", 12, "bold"), foreground="black", background="light grey", width=16, cursor="hand2", command = UploadAction).place(x=580,y=230)   
+    lbl_no_file_chosen = Label(upload_ebooks_screen, text = txt_no_file_chosen, font = ("Helvetica", 12))
+    lbl_no_file_chosen.place(x=760,y=235)
+    #summary
+    Label(upload_ebooks_screen, text = txt_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=270)
+    summary_scrolledText = scrolledtext.ScrolledText(upload_ebooks_screen, font = ("Helvetica", 12), width=105, height=10)
+    summary_scrolledText.place(x=80,y=300)
+    #Submit button
+    Button(upload_ebooks_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = book_verify).place(x=590,y=550)
 
-def page_not_found():
-    global page_not_found_screen
-    page_not_found_screen = Toplevel(upload_ebooks_screen)
-    page_not_found_screen.title("Error")
-    Label(page_not_found_screen, text="Page not found").pack()
-    Button(page_not_found_screen, text="OK", command=delete_page_not_found).pack()
+def UploadAction():
+    filename = filedialog.askopenfilename(parent = upload_ebooks_screen, initialdir = "/", title = "Select file", filetypes = [("PDF files","*.pdf")])
+    if filename:
+        lbl_no_file_chosen.config(text = filename) #change no file chosen text to file path
 
-def delete_page_not_found():
-    page_not_found_screen.destroy()   
+def entry(entry):
+   messagebox.showerror("Failed Upload", entry, parent = upload_ebooks_screen)
+
+def book_verify():
+    if len(book_name.get()) == 0:
+        entry("Book Name is empty. Please enter Book Name.")
+    elif len(author.get()) == 0:
+        entry("Book Author is empty. Please enter Author.")
+    elif len(search_combobox.get()) == 0:
+        entry("No Book Category is selected. Please select Book Category.")
+    elif lbl_no_file_chosen.cget("text") == txt_no_file_chosen:
+        entry(txt_no_file_chosen + ". Please select a PDF file to upload.")
+    elif len(summary_scrolledText.get("1.0", "end-1c")) == 0:
+        entry("Book Summary is empty. Please enter Book Summary.")
+    else:
+        add_book()
+
+def add_book():
+    with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
+        bindata = f.read()
+
+    dbQuery = """INSERT INTO dbo.Books (Name, Category, Author, Summary, BookContent, isActive)
+                 VALUES('"""+book_name.get()+"""',
+                        '"""+search_combobox.get()+"""',
+                        '"""+author.get()+"""',
+                        '"""+summary_scrolledText.get("1.0", "end-1c")+"""',
+                        ?,1)"""
+    result = insertUpdateBookToDb(dbQuery, bindata)
+    if result == 1:
+        messagebox.showinfo("Success", "New Book Upload Successfully", parent = upload_ebooks_screen)
+        upload_ebooks_screen.destroy()
+    else:
+        entry("New Book Upload Failed. Please try again.")

@@ -21,4 +21,5 @@ def edit_profile():
     Button(edit_profile_screen, text= txt_password, font = ("Helvetica", 25, "bold"), foreground="black", background="light grey", width=60, height=3, cursor="hand2", command = change_password).place(x=101,y=498)
  
     edit_profile_screen.title(txt_edit_profile)
+    edit_profile_screen.state("zoomed")
     edit_profile_screen.geometry(geometry_size)

@@ -28,6 +28,7 @@ def delete_ebooks():
     Button(delete_ebooks_screen, text= txt_delete, font = ("Helvetica", 15, "bold"), foreground="white", background="blue", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1101,y=669)
 
     delete_ebooks_screen.title(txt_delete_ebooks)
+    delete_ebooks_screen.state("zoomed")
     delete_ebooks_screen.geometry(geometry_size)
 
 def page_not_found():

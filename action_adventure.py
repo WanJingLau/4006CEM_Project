@@ -17,6 +17,7 @@ def action_adventure():
     Button(action_adventure_screen, text = txt_view_details, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = bookdetails).place(x=960,y=262)
 
     action_adventure_screen.title(txt_action_adventure)
+    action_adventure_screen.state("zoomed")
     action_adventure_screen.geometry(geometry_size)
 
 def page_not_found():
