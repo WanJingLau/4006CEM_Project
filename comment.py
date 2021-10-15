@@ -16,4 +16,5 @@ def comment():
     Label(comment_screen, text = txt_comments, font = ("Helvetica", 15), foreground = "black").place(x=50, y=338)
 
     comment_screen.title(txt_comment)
+    comment_screen.state("zoomed")
     comment_screen.geometry(geometry_size)

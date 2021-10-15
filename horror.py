@@ -16,6 +16,7 @@ def horror():
     Button(horror_screen, text = txt_view_details, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=960,y=262)
 
     horror_screen.title(txt_horror)
+    horror_screen.state("zoomed")
     horror_screen.geometry(geometry_size)
 
 def page_not_found():

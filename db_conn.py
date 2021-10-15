@@ -15,3 +15,10 @@ def insertUpdateDeleteToDb(dbQuery):
     result = conn.rowcount
     conn.commit()
     return result
+
+def insertUpdateBookToDb(dbQuery, bindata):
+    param = (db.Binary(bindata))
+    conn.execute(dbQuery, param)
+    result = conn.rowcount
+    conn.commit()
+    return result

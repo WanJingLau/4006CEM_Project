@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter.constants import N
 from PIL import Image, ImageTk
 from register import register
@@ -52,12 +53,13 @@ def login():
 
     #login screen
     login_screen.title(txt_title)
+    login_screen.state("zoomed")
     login_screen.geometry(geometry_size)
     login_screen.mainloop()
 
 def login_verify():
     if (len(email.get()) == 0 or len(password.get()) == 0):
-        entry_empty()
+        entry("Email/ Password is Empty.")
     else:
         email1 = email.get().lower()
         password1 = password.get()
@@ -70,33 +72,12 @@ def login_verify():
         
         result = readFromDb(dbQuery)
         if result == None:
-            user_password_not_recognised()
+            entry("Wrong Email/ Invalid Password")
         else:
             homepage(email1)
- # Designing popup for login invalid password
 
-def user_password_not_recognised():
-    global user_password_not_recog_screen
-    user_password_not_recog_screen = Toplevel(login_screen)
-    user_password_not_recog_screen.title("Failed Login")
-    Label(user_password_not_recog_screen, text="Wrong Email/ Invalid Password").pack()
-    Button(user_password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
-
- # Designing popup for entry empty
-
-def entry_empty():
-    global entry_empty_screen
-    entry_empty_screen = Toplevel(login_screen)
-    entry_empty_screen.title("Failed Login")
-    Label(entry_empty_screen, text="Email/ Password is Empty.").pack()
-    Button(entry_empty_screen, text="OK", command=delete_entry_empty).pack()
-
-# Deleting popups
-
-def delete_password_not_recognised():
-    user_password_not_recog_screen.destroy()
-
-def delete_entry_empty():
-    entry_empty_screen.destroy()
+ # Designing popup for entry empty/ login invalid password
+def entry(entry):
+    messagebox.showerror("Failed Login", entry, parent = login_screen)
 
 login()
