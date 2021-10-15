@@ -1,15 +1,18 @@
 from tkinter import *
+from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def fantasy():
     global fantasy_screen
+    global back_icon
     fantasy_screen = Toplevel()
 
     geometry_size = "1366x768"
     txt_fantasy = "Fantasy"
     txt_book_name = "The Shadow of God"
     txt_view_details = "View Details"
-
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(fantasy_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     Frame(fantasy_screen, background="light grey", width=1200, height=87).place(x=70, y=242)
     Label(fantasy_screen, text = txt_fantasy, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=100, y=20)
     Label(fantasy_screen, text = txt_book_name, font = ("Helvetica", 25, "bold"), foreground = "black").place(x=106, y=262)
@@ -28,3 +31,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    fantasy_screen.destroy()

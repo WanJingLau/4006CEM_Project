@@ -11,6 +11,7 @@ from email.mime.text import MIMEText
 def forget_password():
     global forget_pw_screen
     global forget_pw_icon
+    global back_icon
     forget_pw_screen = Toplevel()
     forget_pw_icon = ImageTk.PhotoImage(Image.open("forget_password.png").resize((80, 80), Image.ANTIALIAS))
 
@@ -21,11 +22,9 @@ def forget_password():
     txt_submit = "Submit"
     txt_title = "E-Book System"
     geometry_size = "1366x768"
-
     global email
     global email_entry
     email = StringVar()
-
     Label(forget_pw_screen, image = forget_pw_icon).place(x=570, y=40)
     Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, "bold")).place(x=660, y = 70)
     Label(forget_pw_screen, text = txt_provide, font = ("Helvetica", 12, "bold")).place(x=80, y = 200)
@@ -34,13 +33,14 @@ def forget_password():
     email_entry.place(x=80,y=290)
     email_entry.focus_set()
     Button(forget_pw_screen, text=txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = reset_verify).place(x=590,y=500) 
-    
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(forget_pw_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     forget_pw_screen.title(txt_title)
     forget_pw_screen.state("zoomed")
     forget_pw_screen.geometry(geometry_size)
 
 def reset_verify():
-    if len(email.get()) == 0:
+    if len(email.get()) == 0 or email.get().isspace():
         entry("Email address is empty. Please enter an email address.")
     else:
         dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
@@ -108,4 +108,7 @@ Thanks.
 
 def reset_success():
     messagebox.showinfo("Success", "Password reset success. An email has been sent. Kindly check your email.", parent = forget_pw_screen)
+    forget_pw_screen.destroy()
+
+def close_page():
     forget_pw_screen.destroy()

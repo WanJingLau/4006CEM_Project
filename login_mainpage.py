@@ -58,7 +58,7 @@ def login():
     login_screen.mainloop()
 
 def login_verify():
-    if (len(email.get()) == 0 or len(password.get()) == 0):
+    if len(email.get()) == 0 or len(password.get()) == 0 or email.get().isspace() or password.get().isspace():
         entry("Email/ Password is Empty.")
     else:
         email1 = email.get().lower()

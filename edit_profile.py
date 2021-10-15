@@ -6,9 +6,11 @@ from change_username import change_username
 def edit_profile():
     global edit_profile_screen
     global profile_icon
+    global back_icon
     edit_profile_screen = Toplevel()
     profile_icon = ImageTk.PhotoImage(Image.open("profile.png").resize((50, 50), Image.ANTIALIAS))
-
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(edit_profile_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     txt_edit_profile = "Edit Profile"
     geometry_size = "1366x768"
     txt_username = "Change Display Username"
@@ -23,3 +25,6 @@ def edit_profile():
     edit_profile_screen.title(txt_edit_profile)
     edit_profile_screen.state("zoomed")
     edit_profile_screen.geometry(geometry_size)
+
+def close_page():
+    edit_profile_screen.destroy()

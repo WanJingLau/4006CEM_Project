@@ -5,6 +5,7 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 def review():
     global review_screen
     global starrate_icon
+    global back_icon
     review_screen = Toplevel()
     starrate_icon = ImageTk.PhotoImage(Image.open("starrate.png").resize((160, 70), Image.ANTIALIAS))
 
@@ -15,6 +16,8 @@ def review():
     txt_submit = "Submit"
     txt_amount = " 1   2  3   4   5"
 
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(review_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     Label(review_screen, image = starrate_icon).place(x=420, y=535)
     Label(review_screen, text = txt_review, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=50, y=95)
     Label(review_screen, text = txt_amount, font = ("Helvetica", 15, "bold"), foreground = "black").place(x=430, y=619)
@@ -36,3 +39,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    review_screen.destroy()

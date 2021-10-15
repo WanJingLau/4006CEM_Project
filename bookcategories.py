@@ -14,12 +14,14 @@ def bookcategories():
     global horror_icon
     global fantasy_icon
     global romance_icon
+    global back_icon
     book_categories_screen = Toplevel()
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((50, 50), Image.ANTIALIAS))
     action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure.png").resize((110, 120), Image.ANTIALIAS))
     horror_icon = ImageTk.PhotoImage(Image.open("horror.png").resize((110, 120), Image.ANTIALIAS))
     fantasy_icon = ImageTk.PhotoImage(Image.open("fantasy.png").resize((110, 120), Image.ANTIALIAS))
     romance_icon = ImageTk.PhotoImage(Image.open("romance.png").resize((110, 120), Image.ANTIALIAS))
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
 
     txt_book_categories = "Book Categories"
     txt_search = "Search"
@@ -28,6 +30,8 @@ def bookcategories():
     txt_horror = "Horror"
     txt_fantasy = "Fantasy"
     txt_romance = "Romance"
+
+    Button(book_categories_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     search_entry = Entry(book_categories_screen, font = "Helvetica 15", textvariable = txt_search, width=50)
     search_entry.place(x=100,y=90) 
@@ -59,3 +63,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    book_categories_screen.destroy()
