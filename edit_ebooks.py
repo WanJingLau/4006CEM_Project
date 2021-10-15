@@ -1,63 +1,149 @@
 from tkinter import *
+from tkinter import ttk, messagebox, scrolledtext, filedialog
 from PIL import Image, ImageTk
-from db_conn import readFromDb, insertUpdateDeleteToDb
+from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb, insertUpdateBookToDb
 
 def edit_ebooks():
     global edit_ebooks_screen
     global editebooks_icon
     global back_icon
+    global book_combobox
+    global book_category_combobox
+    global book_name_entry
+    global book_category_entry
+    global book_author_entry
+    global author
+    global summary_scrolledText
+    global btn_upload_pdf
+    global txt_no_file_chosen
+    global lbl_no_file_chosen
     edit_ebooks_screen = Toplevel()
-    editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((50, 50), Image.ANTIALIAS))
-
+    editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((80, 80), Image.ANTIALIAS))
+    book_name = StringVar()
+    author = StringVar()
+    #text variable declaration
     txt_edit_ebooks = "Edit E-Books"
-    txt_select = "Select"
     geometry_size = "1366x768"
-    txt_update_book_details = "Update Book Details"
-    txt_book_name = "Book Name:"
-    txt_author = "Author:"
-    txt_summary = "Summary of Book:"
-    txt_content = "New Content:"
-    txt_insert = "Insert new pdf file"
+    txt_select_book = "Select E-Books to edit"
+    txt_book_name = "Book Name:" 
+    txt_book_author = "Book Author:"
+    txt_book_category = "Book Category:"
+    txt_book_summary = "Book Summary:"
+    txt_book_content = "Book Content: *(upload only if there is new update on pdf file)"
+    txt_file = "Upload File (.pdf)"
+    txt_no_file_chosen = "No File Chosen"
     txt_submit = "Submit"
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     Button(edit_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
-
-    Label(edit_ebooks_screen, image = editebooks_icon).place(x=100, y=30)
-    Label(edit_ebooks_screen, text = txt_edit_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
-
-    search_entry = Entry(edit_ebooks_screen, font = "Helvetica 15", textvariable = txt_select, width=70)
-    search_entry.place(x=100,y=90)
-    Button(edit_ebooks_screen, text=txt_select, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = page_not_found).place(x=900,y=80) 
-
-    Label(edit_ebooks_screen, text = txt_update_book_details, font = ("Helvetica", 15, "bold"), foreground = "black").place(x=50, y = 150)
-    
-    Label(edit_ebooks_screen, text = txt_book_name, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=200)
-    old_username_entry = Entry(edit_ebooks_screen, font = "Helvetica 12", width=50)
-    old_username_entry.place(x=50,y=250)
-    Label(edit_ebooks_screen, text = txt_author, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=300)
-    new_username_entry = Entry(edit_ebooks_screen, font = "Helvetica 12", width=50)
-    new_username_entry.place(x=50,y=350)
-    Label(edit_ebooks_screen, text = txt_summary, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=400)
-    confirm_username_entry = Entry(edit_ebooks_screen, font = "Helvetica 12", width=50)
-    confirm_username_entry.place(x=50,y=450)
-    Label(edit_ebooks_screen, text = txt_content, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=503)
-    Button(edit_ebooks_screen, text= txt_insert, font = ("Helvetica", 15, "bold"), foreground="black", background="light grey", width=16, height=1, cursor="hand2", command = page_not_found).place(x=50,y=555)
-
-    Button(edit_ebooks_screen, text= txt_submit, font = ("Helvetica", 15, "bold"), foreground="white", background="blue", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1101,y=669)
-
+    #screen title, screen size, maximize window
     edit_ebooks_screen.title(txt_edit_ebooks)
     edit_ebooks_screen.state("zoomed")
     edit_ebooks_screen.geometry(geometry_size)
+    #page icon, title
+    Label(edit_ebooks_screen, image = editebooks_icon).place(x=80, y=40)
+    Label(edit_ebooks_screen, text = txt_edit_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    #book name selection
+    Label(edit_ebooks_screen, text = txt_select_book, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)
+    available_book = get_available_book()
+    book_combobox = ttk.Combobox(edit_ebooks_screen, values = available_book, state = "readonly", width = 100)
+    book_combobox.place(x=80, y= 170)
+    book_combobox.bind("<<ComboboxSelected>>", lambda e : get_book_detail())
+    #book name display
+    Label(edit_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=250)
+    book_name_entry = Entry(edit_ebooks_screen, textvariable = book_name, font = "Helvetica 12", state = DISABLED, width=50)
+    book_name_entry.place(x=80, y=280)
+    #author
+    Label(edit_ebooks_screen, text = txt_book_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=130)
+    book_author_entry = Entry(edit_ebooks_screen, textvariable = author, font = "Helvetica 12",state = DISABLED, width=50)
+    book_author_entry.place(x=580,y=160)
+    #book category
+    Label(edit_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=200)
+    book_category_combobox = ttk.Combobox(edit_ebooks_screen, values=("Action/Adventure", "Horror","Fantasy","Romance"), state = DISABLED)
+    book_category_combobox.place(x=80,y=230)
+    #upload file
+    Label(edit_ebooks_screen, text = txt_book_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=200)
+    btn_upload_pdf = Button(edit_ebooks_screen, text= txt_file, font = ("Helvetica", 12, "bold"), state = DISABLED, foreground="black", background="light grey", width=16, cursor="hand2", command = UploadAction)
+    btn_upload_pdf.place(x=580,y=230)   
+    lbl_no_file_chosen = Label(edit_ebooks_screen, text = txt_no_file_chosen, font = ("Helvetica", 12))
+    lbl_no_file_chosen.place(x=760,y=235)
+    #summary
+    Label(edit_ebooks_screen, text = txt_book_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=270)
+    summary_scrolledText = scrolledtext.ScrolledText(edit_ebooks_screen, state = DISABLED, font = ("Helvetica", 12), width=105, height=10)
+    summary_scrolledText.place(x=80,y=300)
+    #Submit button
+    Button(edit_ebooks_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = edit_book_verify).place(x=590,y=550)
 
-def page_not_found():
-    global page_not_found_screen
-    page_not_found_screen = Toplevel(edit_ebooks_screen)
-    page_not_found_screen.title("Error")
-    Label(page_not_found_screen, text="Page not found").pack()
-    Button(page_not_found_screen, text="OK", command=delete_page_not_found).pack()
 
-def delete_page_not_found():
-    page_not_found_screen.destroy()
+def get_available_book():
+    available_book_list = []
+    dbQuery = "SELECT Name FROM dbo.Books WITH(NOLOCK) WHERE isActive = 1 ORDER BY Id ASC"
+    result = readAllFromDb(dbQuery)
+    for book in result:
+        available_book_list.append(book[0])    
+    return available_book_list
+
+def UploadAction():
+    filename = filedialog.askopenfilename(parent = edit_ebooks_screen, initialdir = "/", title = "Select file", filetypes = [("PDF files","*.pdf")])
+    if filename:
+        lbl_no_file_chosen.config(text = filename) #change no file chosen text to file path
+
+def get_book_detail():
+    book_name_entry.config(state = NORMAL)
+    book_category_combobox.config(state= "readonly")
+    book_author_entry.config(state= NORMAL)
+    btn_upload_pdf.config(state=NORMAL)
+    summary_scrolledText.config(state=NORMAL)
+    lbl_no_file_chosen.config(text = txt_no_file_chosen) #change to default
+    book_name_entry.delete(0,END)
+    book_author_entry.delete(0,END)
+    summary_scrolledText.delete(1.0,END)
+    dbQuery = """SELECT Category, Author, Summary
+                 FROM dbo.Books WITH(NOLOCK) 
+                 WHERE Name = '"""+book_combobox.get()+"""'
+                  AND isActive = 1"""
+    result1 = readFromDb(dbQuery)
+    book_name_entry.insert(0, book_combobox.get())
+    book_name_entry.config(state = DISABLED)
+    if result1 != None:
+        book_category_combobox.set(result1[0])
+        book_author_entry.insert(0, result1[1])
+        summary_scrolledText.insert(INSERT, result1[2])
+
+def entry(entry):
+   messagebox.showerror("Failed Edit", entry, parent = edit_ebooks_screen)
+
+def edit_book_verify():
+    if len(book_combobox.get()) == 0:
+        entry("No Book is selected. Please select a Book.")
+    elif len(author.get()) == 0 or author.get().isspace():
+        entry("Book Author is empty. Please enter Book Author.")
+    elif len(summary_scrolledText.get("1.0", "end-1c")) == 0 or summary_scrolledText.get("1.0", "end-1c").isspace():
+        entry("Book Summary is empty. Please enter Book Summary.")
+    else:
+        edit_book()
 
 def close_page():
     edit_ebooks_screen.destroy()
+
+def edit_book():
+    global result
+    global dbQuery
+
+    dbQuery = """UPDATE dbo.Books
+                 SET Author = '"""+author.get()+"""'
+                 AND Summary = '"""+summary_scrolledText.get("1.0", "end-1c")+"""' """
+    
+    if lbl_no_file_chosen.cget("text") != txt_no_file_chosen:
+        with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
+            bindata = f.read()
+        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = '"+book_combobox.get()+"'"
+        result = insertUpdateBookToDb(dbQuery, bindata)
+    else:
+        dbQuery = dbQuery + "WHERE Name = '"+book_combobox.get()+"'"
+        result = insertUpdateDeleteToDb(dbQuery)
+    
+    if result == 1:
+        messagebox.showinfo("Success", "Book Edit Successfully", parent = edit_ebooks_screen)
+        edit_ebooks_screen.destroy()
+    else:
+        entry("Book Edit Failed. Please try again.")

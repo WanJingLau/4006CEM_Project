@@ -1,8 +1,6 @@
-from os import stat
 from tkinter import *
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-from pyodbc import paramstyle
 from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb
 
 def delete_ebooks():

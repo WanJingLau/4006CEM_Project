@@ -40,7 +40,7 @@ def forget_password():
     forget_pw_screen.geometry(geometry_size)
 
 def reset_verify():
-    if len(email.get()) == 0:
+    if len(email.get()) == 0 or email.get().isspace():
         entry("Email address is empty. Please enter an email address.")
     else:
         dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"

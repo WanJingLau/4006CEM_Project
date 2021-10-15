@@ -66,13 +66,13 @@ def register():
     register_screen.geometry(geometry_size)
 
 def register_verify():
-    if len(email.get()) == 0:
+    if len(email.get()) == 0 or email.get().isspace():
         entry("Email is empty. Please enter an email.")
-    elif len(username.get()) == 0:
+    elif len(username.get()) == 0 or username.get().isspace():
         entry("Username is empty. Please enter a username.")
-    elif len(password.get()) == 0:
+    elif len(password.get()) == 0 or password.get().isspace():
         entry("Password is empty. Please enter a password.")
-    elif len(confirm_password.get()) == 0:
+    elif len(confirm_password.get()) == 0 or confirm_password.get().isspace():
         entry("Confirm Password is empty. Please enter confirm password.")
     elif password.get() != confirm_password.get():
         entry("Password and Confirm Password not matched. Please reenter password.")
