@@ -84,7 +84,16 @@ def book_verify():
     elif len(summary_scrolledText.get("1.0", "end-1c")) == 0:
         entry("Book Summary is empty. Please enter Book Summary.")
     else:
-        add_book()
+        book_exist = check_book_exist()
+        if book_exist == 1:
+            entry("Similar Book Name already added. Please add other new book.")
+        else:
+            add_book()
+
+def check_book_exist():
+    dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = '"+book_name.get()+"' AND isActive = 1"
+    result = readFromDb(dbQuery)
+    return result[0]
 
 def add_book():
     with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
