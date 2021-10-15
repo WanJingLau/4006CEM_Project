@@ -9,7 +9,7 @@ def store_ebooks():
     store_ebooks_screen = Toplevel()
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((50, 50), Image.ANTIALIAS))
 
-    txt_store_ebooks = "Store E-books"
+    txt_store_ebooks = "Favourite Books"
     geometry_size = "1366x768"
     txt_storage = "This is the storage of at least more than 20 e-books."
     txt_book_name = "Percy Jackson - Tome 3"
@@ -17,15 +17,17 @@ def store_ebooks():
     txt_read = "Read"
     txt_download = "Download"
     txt_delete = "Delete"
+    txt_review = "Review"
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     Button(store_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(store_ebooks_screen, image = store_ebooks_icon).place(x=100, y=30)
     Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
     
-    Button(store_ebooks_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=784,y=261)
-    Button(store_ebooks_screen, text= txt_download, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=946,y=261)
-    Button(store_ebooks_screen, text= txt_delete, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=1106,y=261)
+    Button(store_ebooks_screen, text= txt_read, font = ("Helvetica", 12), foreground="black", width=14, height=1, cursor="hand2", command = page_not_found).place(x=850,y=261)
+    Button(store_ebooks_screen, text= txt_download, font = ("Helvetica", 12), foreground="black", width=14, height=1, cursor="hand2", command = page_not_found).place(x=1000,y=261)
+    Button(store_ebooks_screen, text= txt_delete, font = ("Helvetica", 12), foreground="black", width=14, height=1, cursor="hand2", command = page_not_found).place(x=1150,y=261)
+    Button(store_ebooks_screen, text= txt_review, font = ("Helvetica", 12), foreground="black", width=14, height=1, cursor="hand2", command = page_not_found).place(x=1300,y=261)
 
     Label(store_ebooks_screen, text = txt_storage, font = ("Helvetica", 15), foreground = "black").place(x=60, y=152)    
     Label(store_ebooks_screen, text = txt_book_name, font = ("Helvetica", 20, "bold"), foreground = "black").place(x=106, y=261)
