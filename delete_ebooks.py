@@ -12,8 +12,11 @@ def delete_ebooks():
     global book_name_entry
     global book_category_entry
     global book_author_entry
+    global back_icon
     delete_ebooks_screen = Toplevel()
     deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((80, 80), Image.ANTIALIAS))
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(delete_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #text variable declaration
     txt_delete_ebooks = "Delete E-Books"
     txt_select_book = "Select E-Books to delete"
@@ -91,3 +94,6 @@ def delete_verify():
                 delete_ebooks_screen.destroy()
             else:
                 messagebox.showerror("Failed Delete", "E-Book Delete Failed. Please try again.", parent = delete_ebooks_screen)
+
+def close_page():
+    delete_ebooks_screen.destroy()

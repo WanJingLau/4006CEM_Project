@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def change_password():
@@ -10,6 +11,8 @@ def change_password():
     global old_password
     global new_password
     global confirm_new_password
+    global back_icon
+
     change_password_screen = Toplevel()
     txt_change_password = "Change Password"
     geometry_size = "1366x768"
@@ -20,7 +23,8 @@ def change_password():
     old_password = StringVar()
     new_password = StringVar()
     confirm_new_password = StringVar()
-
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(change_password_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(change_password_screen, text = txt_change_password, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=50, y=95)
 
@@ -75,3 +79,6 @@ def change_pw_success():
 
 def entry(entry):
     messagebox.showerror("Failed Change Password", entry, parent = change_password_screen)
+
+def close_page():
+    change_password_screen.destroy()

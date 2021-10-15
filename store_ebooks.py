@@ -5,7 +5,7 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 def store_ebooks():
     global store_ebooks_screen
     global store_ebooks_icon
-
+    global back_icon
     store_ebooks_screen = Toplevel()
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((50, 50), Image.ANTIALIAS))
 
@@ -17,6 +17,8 @@ def store_ebooks():
     txt_read = "Read"
     txt_download = "Download"
     txt_delete = "Delete"
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(store_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(store_ebooks_screen, image = store_ebooks_icon).place(x=100, y=30)
     Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
@@ -42,3 +44,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    store_ebooks_screen.destroy()
