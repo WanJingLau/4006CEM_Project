@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, filedialog, scrolledtext, messagebox
 from PIL import Image, ImageTk
-from db_conn import insertUpdateBookToDb, readFromDb, insertUpdateDeleteToDb
+from db_conn import insertUpdateBookToDb, readFromDb
 
 def upload_ebooks():
     global upload_ebooks_screen
@@ -16,6 +16,7 @@ def upload_ebooks():
     global bindata
     global lbl_no_file_chosen
     global txt_no_file_chosen
+    global back_icon
     #variable declaration
     upload_ebooks_screen = Toplevel()
     uploadbooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((80, 80), Image.ANTIALIAS))
@@ -36,6 +37,9 @@ def upload_ebooks():
     upload_ebooks_screen.title(txt_upload_ebooks)
     upload_ebooks_screen.geometry(geometry_size)
     upload_ebooks_screen.state("zoomed")
+    #back_button
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
     Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70)
@@ -73,15 +77,15 @@ def entry(entry):
    messagebox.showerror("Failed Upload", entry, parent = upload_ebooks_screen)
 
 def book_verify():
-    if len(book_name.get()) == 0:
+    if len(book_name.get()) == 0 or book_name.get().isspace():
         entry("Book Name is empty. Please enter Book Name.")
-    elif len(author.get()) == 0:
-        entry("Book Author is empty. Please enter Author.")
+    elif len(author.get()) == 0 or author.get().isspace():
+        entry("Book Author is empty. Please enter Book Author.")
     elif len(search_combobox.get()) == 0:
         entry("No Book Category is selected. Please select Book Category.")
     elif lbl_no_file_chosen.cget("text") == txt_no_file_chosen:
         entry(txt_no_file_chosen + ". Please select a PDF file to upload.")
-    elif len(summary_scrolledText.get("1.0", "end-1c")) == 0:
+    elif len(summary_scrolledText.get("1.0", "end-1c")) == 0 or summary_scrolledText.get("1.0", "end-1c").isspace():
         entry("Book Summary is empty. Please enter Book Summary.")
     else:
         book_exist = check_book_exist()
@@ -111,3 +115,6 @@ def add_book():
         upload_ebooks_screen.destroy()
     else:
         entry("New Book Upload Failed. Please try again.")
+
+def close_page():
+    upload_ebooks_screen.destroy()
