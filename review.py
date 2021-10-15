@@ -16,8 +16,8 @@ def review():
     txt_submit = "Submit"
     txt_amount = " 1   2  3   4   5"
 
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(review_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(review_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     Label(review_screen, image = starrate_icon).place(x=420, y=535)
     Label(review_screen, text = txt_review, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=50, y=95)
     Label(review_screen, text = txt_amount, font = ("Helvetica", 15, "bold"), foreground = "black").place(x=430, y=619)

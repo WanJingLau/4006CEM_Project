@@ -11,8 +11,8 @@ def horror():
     txt_horror = "Horror"
     txt_book_name = "Last Things"
     txt_view_details = "View Details"
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(horror_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(horror_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Frame(horror_screen, background="light grey", width=1200, height=87).place(x=70, y=242)
     Label(horror_screen, text = txt_horror, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=100, y=20)

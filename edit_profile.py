@@ -9,8 +9,8 @@ def edit_profile():
     global back_icon
     edit_profile_screen = Toplevel()
     profile_icon = ImageTk.PhotoImage(Image.open("profile.png").resize((50, 50), Image.ANTIALIAS))
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(edit_profile_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(edit_profile_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     txt_edit_profile = "Edit Profile"
     geometry_size = "1366x768"
     txt_username = "Change Display Username"

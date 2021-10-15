@@ -38,8 +38,8 @@ def upload_ebooks():
     upload_ebooks_screen.geometry(geometry_size)
     upload_ebooks_screen.state("zoomed")
     #back_button
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
     Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70)

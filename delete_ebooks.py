@@ -15,8 +15,8 @@ def delete_ebooks():
     global back_icon
     delete_ebooks_screen = Toplevel()
     deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((80, 80), Image.ANTIALIAS))
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(delete_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(delete_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #text variable declaration
     txt_delete_ebooks = "Delete E-Books"
     txt_select_book = "Select E-Books to delete"

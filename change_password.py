@@ -23,9 +23,9 @@ def change_password():
     old_password = StringVar()
     new_password = StringVar()
     confirm_new_password = StringVar()
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(change_password_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
-    
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(change_password_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
+
     Label(change_password_screen, text = txt_change_password, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=50, y=95)
 
     Label(change_password_screen, text = txt_old_password, font = ("Helvetica", 15, "bold"), foreground = "blue").place(x=50,y=270)

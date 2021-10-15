@@ -14,7 +14,7 @@ def bookdetails():
     book_details_screen = Toplevel()
     fourstar_icon = ImageTk.PhotoImage(Image.open("fourstar.png").resize((160, 70), Image.ANTIALIAS))
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((50, 50), Image.ANTIALIAS))
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
 
     txt_book_details = "Book Details"
     geometry_size = "1366x768"
@@ -27,7 +27,7 @@ def bookdetails():
     txt_marks = "4.45"
     txt_summary = "Summary: Monsters always kill demigods. Percy and his friends Annabeth, Grover and Talia find themselves facing a terrible Mantis."
     
-    Button(book_details_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    Button(book_details_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(book_details_screen, image = book_categories_icon).place(x=100, y=30)
     Label(book_details_screen, text = txt_book_details, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)

@@ -19,8 +19,8 @@ def edit_ebooks():
     txt_content = "New Content:"
     txt_insert = "Insert new pdf file"
     txt_submit = "Submit"
-    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
-    Button(edit_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    Button(edit_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(edit_ebooks_screen, image = editebooks_icon).place(x=100, y=30)
     Label(edit_ebooks_screen, text = txt_edit_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
