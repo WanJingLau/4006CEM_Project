@@ -87,29 +87,17 @@ def show_lbl(email):
     result = readFromDb(dbQuery)
     global editebooks_icon
     global deleteebooks_icon
-    global help_center_icon
-    global check_in_days_icon
     txt_edit_ebooks = "Edit E-Books"
     txt_delete_ebooks = "Delete E-Books"
-    txt_help_center = "Help Center"
-    txt_check_in_days = "Check In Days"
     editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((50, 50), Image.ANTIALIAS))
     deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((50, 50), Image.ANTIALIAS))
-    help_center_icon = ImageTk.PhotoImage(Image.open("helpcenter.png").resize((50, 50), Image.ANTIALIAS))
-    check_in_days_icon = ImageTk.PhotoImage(Image.open("checkin.png").resize((50, 50), Image.ANTIALIAS))
     if result[0] == "admin":
         #edit ebook
-        Label(homepage_screen, image = editebooks_icon).place(x=80, y=430)
-        Button(homepage_screen, text = txt_edit_ebooks, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_ebooks).place(x=180,y=440)
+        Label(homepage_screen, image = editebooks_icon).place(x=80, y=530)
+        Button(homepage_screen, text = txt_edit_ebooks, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = edit_ebooks).place(x=180,y=540)
         #delete ebook
-        Label(homepage_screen, image = deleteebooks_icon).place(x=550, y=430)
-        Button(homepage_screen, text = txt_delete_ebooks, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = delete_ebooks).place(x=650,y=440)
-        #help center
-        Label(homepage_screen, image = help_center_icon).place(x=80, y=530)
-        Button(homepage_screen, text=txt_help_center, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = help_center).place(x=180,y=540)
-        #check in days
-        Label(homepage_screen, image = check_in_days_icon).place(x=550, y=530)
-        Button(homepage_screen, text=txt_check_in_days, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = check_in_days).place(x=650,y=540)
+        Label(homepage_screen, image = deleteebooks_icon).place(x=550, y=530)
+        Button(homepage_screen, text = txt_delete_ebooks, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = delete_ebooks).place(x=650,y=540)
     Label(homepage_screen, text = "Hi, " + result[1] + ". Welcome back!", font = ("Helvetica", 12, "bold")).place(x=80, y=150)
 def delete_page_not_found():
     page_not_found_screen.destroy()
