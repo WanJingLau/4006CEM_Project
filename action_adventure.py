@@ -6,6 +6,7 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 def action_adventure():
     global action_adventure_screen
     global back_icon
+    global action_adventure_icon
     action_adventure_screen = Toplevel()
 
     geometry_size = "1366x768"
@@ -13,12 +14,14 @@ def action_adventure():
     txt_book_name = "Percy Jackson - Tome 3"
     txt_view_details = "View Details"
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure.png").resize((80, 80), Image.ANTIALIAS))
 
+    Label(action_adventure_screen, image = action_adventure_icon).place(x=80, y=40)
     Button(action_adventure_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     Frame(action_adventure_screen, background="light grey", width=1200, height=87).place(x=70, y=242)
-    Label(action_adventure_screen, text = txt_action_adventure, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=100, y=20)
-    Label(action_adventure_screen, text = txt_book_name, font = ("Helvetica", 25, "bold"), foreground = "black").place(x=106, y=262)
-    Button(action_adventure_screen, text = txt_view_details, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = bookdetails).place(x=960,y=262)
+    Label(action_adventure_screen, text = txt_action_adventure, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y=70)
+    Label(action_adventure_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "black").place(x=106, y=262)
+    Button(action_adventure_screen, text = txt_view_details, font = ("Helvetica", 12, "bold"), foreground="black", width=14, height=1, cursor="hand2", command = bookdetails).place(x=960,y=262)
 
     action_adventure_screen.title(txt_action_adventure)
     action_adventure_screen.state("zoomed")
