@@ -16,6 +16,7 @@ def upload_ebooks():
     global bindata
     global lbl_no_file_chosen
     global txt_no_file_chosen
+    global back_icon
     #variable declaration
     upload_ebooks_screen = Toplevel()
     uploadbooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((80, 80), Image.ANTIALIAS))
@@ -36,6 +37,9 @@ def upload_ebooks():
     upload_ebooks_screen.title(txt_upload_ebooks)
     upload_ebooks_screen.geometry(geometry_size)
     upload_ebooks_screen.state("zoomed")
+    #back_button
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((50, 50), Image.ANTIALIAS))
+    Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=17,y=65)
     #page title
     Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
     Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70)
@@ -111,3 +115,6 @@ def add_book():
         upload_ebooks_screen.destroy()
     else:
         entry("New Book Upload Failed. Please try again.")
+
+def close_page():
+    upload_ebooks_screen.destroy()
