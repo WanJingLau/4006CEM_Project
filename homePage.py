@@ -28,7 +28,7 @@ def homepage(email):
     txt_logout = "Log Out"
     geometry_size = "1366x768"
     txt_book_categories = "Book Categories"
-    txt_store_books = "Store E-Books"
+    txt_store_books = "Favourite Books"
     txt_upload_books = "Upload E-Books"
     txt_edit_profile = "Edit Profile"
     #homepage title, size, maximize window
