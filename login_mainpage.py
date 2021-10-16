@@ -50,6 +50,7 @@ def login():
     lbl_register_acc = Label(login_screen, text = txt_register_acc, font = ("Helvetica", 12), foreground = "blue", cursor="hand2")
     lbl_register_acc.place(x=575,y=550)
     lbl_register_acc.bind("<Button-1>", lambda e: register())
+    login_screen.bind("<Return>", lambda e: login_verify())
 
     #login screen
     login_screen.title(txt_title)
