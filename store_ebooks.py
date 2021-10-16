@@ -5,9 +5,11 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 def store_ebooks():
     global store_ebooks_screen
     global store_ebooks_icon
+    global favorite_book_image
     global back_icon
     store_ebooks_screen = Toplevel()
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((50, 50), Image.ANTIALIAS))
+    favorite_book_image = ImageTk.PhotoImage(Image.open("favorite_book_image.png").resize((170, 160), Image.ANTIALIAS))
 
     txt_store_ebooks = "Favourite Books"
     geometry_size = "1366x768"
@@ -22,6 +24,7 @@ def store_ebooks():
     Button(store_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
 
     Label(store_ebooks_screen, image = store_ebooks_icon).place(x=100, y=30)
+    Label(store_ebooks_screen, image = favorite_book_image).place(x=1170, y=80)
     Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
     
     Button(store_ebooks_screen, text= txt_read, font = ("Helvetica", 12), foreground="black", width=14, height=1, cursor="hand2", command = page_not_found).place(x=850,y=261)

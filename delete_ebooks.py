@@ -6,6 +6,7 @@ from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb
 def delete_ebooks():
     global delete_ebooks_screen
     global deleteebooks_icon
+    global delete_ebooks_image
     global book_combobox
     global book_name_entry
     global book_category_entry
@@ -13,6 +14,7 @@ def delete_ebooks():
     global back_icon
     delete_ebooks_screen = Toplevel()
     deleteebooks_icon = ImageTk.PhotoImage(Image.open("deleteebooks.png").resize((80, 80), Image.ANTIALIAS))
+    delete_ebooks_image = ImageTk.PhotoImage(Image.open("delete_ebooks_image.png").resize((340, 260), Image.ANTIALIAS))
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     Button(delete_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #text variable declaration
@@ -29,6 +31,7 @@ def delete_ebooks():
     delete_ebooks_screen.geometry(geometry_size)
     #page icon, title
     Label(delete_ebooks_screen, image = deleteebooks_icon).place(x=80, y=40)
+    Label(delete_ebooks_screen, image = delete_ebooks_image).place(x=990, y=65)
     Label(delete_ebooks_screen, text = txt_delete_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     #book name selection
     Label(delete_ebooks_screen, text = txt_select_book, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)

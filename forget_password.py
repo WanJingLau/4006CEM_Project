@@ -12,8 +12,10 @@ def forget_password():
     global forget_pw_screen
     global forget_pw_icon
     global back_icon
+    global forget_password_image
     forget_pw_screen = Toplevel()
     forget_pw_icon = ImageTk.PhotoImage(Image.open("forget_password.png").resize((80, 80), Image.ANTIALIAS))
+    forget_password_image = ImageTk.PhotoImage(Image.open("forget_password_image.png").resize((430, 320), Image.ANTIALIAS))
 
     #define text
     txt_forget_pw = "Forget Password?"
@@ -26,6 +28,7 @@ def forget_password():
     global email_entry
     email = StringVar()
     Label(forget_pw_screen, image = forget_pw_icon).place(x=570, y=40)
+    Label(forget_pw_screen, image = forget_password_image).place(x=900, y=400)
     Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, "bold")).place(x=660, y = 70)
     Label(forget_pw_screen, text = txt_provide, font = ("Helvetica", 12, "bold")).place(x=80, y = 200)
     Label(forget_pw_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 

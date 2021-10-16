@@ -14,7 +14,7 @@ def action_adventure():
     txt_book_name = "Percy Jackson - Tome 3"
     txt_view_details = "View Details"
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
-    action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure.png").resize((80, 80), Image.ANTIALIAS))
+    action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure_small.png").resize((80, 80), Image.ANTIALIAS))
 
     Label(action_adventure_screen, image = action_adventure_icon).place(x=80, y=40)
     Button(action_adventure_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)

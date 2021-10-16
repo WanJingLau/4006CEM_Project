@@ -5,6 +5,7 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def change_password():
     global change_password_screen
+    global change_password_image
     global old_password_entry
     global new_password_entry
     global confirm_password_entry
@@ -24,7 +25,9 @@ def change_password():
     new_password = StringVar()
     confirm_new_password = StringVar()
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    change_password_image = ImageTk.PhotoImage(Image.open("change_password_image.png").resize((330, 200), Image.ANTIALIAS))
     Button(change_password_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
+    Label(change_password_screen, image = change_password_image).place(x=1020, y=100)
 
     Label(change_password_screen, text = txt_change_password, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=50, y=95)
 

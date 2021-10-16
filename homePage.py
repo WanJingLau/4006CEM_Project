@@ -20,6 +20,7 @@ def homepage(email):
     global edit_profile_icon
     global help_center_icon
     global check_in_days_icon
+    global home_page_admin_image
     homepage_screen = Toplevel()
     homepage_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((80, 80), Image.ANTIALIAS))
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((50, 50), Image.ANTIALIAS))
@@ -28,6 +29,7 @@ def homepage(email):
     edit_profile_icon = ImageTk.PhotoImage(Image.open("profile.png").resize((50, 50), Image.ANTIALIAS))
     help_center_icon = ImageTk.PhotoImage(Image.open("helpcenter.png").resize((50, 50), Image.ANTIALIAS))
     check_in_days_icon = ImageTk.PhotoImage(Image.open("checkin.png").resize((50, 50), Image.ANTIALIAS))
+    home_page_admin_image = ImageTk.PhotoImage(Image.open("home_page_admin_image.png").resize((310, 190), Image.ANTIALIAS))
     #text variable declaration
     txt_homepage = "Home Page"
     txt_logout = "Log Out"
@@ -46,6 +48,7 @@ def homepage(email):
     Button(homepage_screen, text=txt_logout, font = ("Helvetica", 12, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = logout).place(x=730,y=145)
     #homepage icon, title
     Label(homepage_screen, image = homepage_icon).place(x=80, y=40)
+    Label(homepage_screen, image = home_page_admin_image).place(x=1040, y=560)
     Label(homepage_screen, text = txt_homepage, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70) 
     #book category
     Label(homepage_screen, image = book_categories_icon).place(x=80, y=230)
@@ -86,6 +89,7 @@ def show_lbl(email):
     result = readFromDb(dbQuery)
     global editebooks_icon
     global deleteebooks_icon
+    global home_page_admin_image
     txt_edit_ebooks = "Edit E-Books"
     txt_delete_ebooks = "Delete E-Books"
     editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((50, 50), Image.ANTIALIAS))

@@ -6,8 +6,10 @@ from db_conn import readFromDb, insertUpdateDeleteToDb
 def register():
     global register_screen
     global register_icon
+    global register_image
     register_screen = Toplevel()
     register_icon = ImageTk.PhotoImage(Image.open("register.png").resize((80, 80), Image.ANTIALIAS))
+    register_image = ImageTk.PhotoImage(Image.open("register_image.png").resize((350, 350), Image.ANTIALIAS))
 
     txt_register = "Register"
     txt_title = "E-Book System"
@@ -38,6 +40,7 @@ def register():
     agree = IntVar()
 
     Label(register_screen, image = register_icon).place(x=80, y=40)
+    Label(register_screen, image = register_image).place(x=950, y=210)
     Label(register_screen, text = txt_register, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     Label(register_screen, text = txt_complete_form, font = ("Helvetica", 12, "bold")).place(x=80, y = 130)
     Label(register_screen, text = txt_field_required, font = ("Helvetica", 12, "bold"), foreground = "red").place(x=525, y = 130)
