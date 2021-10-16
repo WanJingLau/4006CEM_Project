@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk, messagebox, scrolledtext, filedialog
 from PIL import Image, ImageTk
 from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb, insertUpdateBookToDb
+from helpers import check_single_quote
 
 def edit_ebooks():
     global edit_ebooks_screen
@@ -97,9 +98,11 @@ def get_book_detail():
     book_name_entry.delete(0,END)
     book_author_entry.delete(0,END)
     summary_scrolledText.delete(1.0,END)
+    global book_name
+    book_name = check_single_quote(book_combobox.get())
     dbQuery = """SELECT Category, Author, Summary
                  FROM dbo.Books WITH(NOLOCK) 
-                 WHERE Name = '"""+book_combobox.get()+"""'
+                 WHERE Name = '"""+book_name+"""'
                   AND isActive = 1"""
     result1 = readFromDb(dbQuery)
     book_name_entry.insert(0, book_combobox.get())
@@ -128,18 +131,19 @@ def close_page():
 def edit_book():
     global result
     global dbQuery
-
+    new_author = check_single_quote(author.get())
+    new_summary = check_single_quote(summary_scrolledText.get("1.0", "end-1c"))
     dbQuery = """UPDATE dbo.Books
-                 SET Author = '"""+author.get()+"""'
-                 AND Summary = '"""+summary_scrolledText.get("1.0", "end-1c")+"""' """
+                 SET Author = '"""+new_author+"""'
+                 AND Summary = '"""+new_summary+"""' """
     
     if lbl_no_file_chosen.cget("text") != txt_no_file_chosen:
         with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
             bindata = f.read()
-        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = '"+book_combobox.get()+"'"
+        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = '"+book_name+"'"
         result = insertUpdateBookToDb(dbQuery, bindata)
     else:
-        dbQuery = dbQuery + "WHERE Name = '"+book_combobox.get()+"'"
+        dbQuery = dbQuery + "WHERE Name = '"+book_name+"'"
         result = insertUpdateDeleteToDb(dbQuery)
     
     if result == 1:

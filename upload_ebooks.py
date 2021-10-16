@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk, filedialog, scrolledtext, messagebox
 from PIL import Image, ImageTk
 from db_conn import insertUpdateBookToDb, readFromDb
+from helpers import check_single_quote
 
 def upload_ebooks():
     global upload_ebooks_screen
@@ -95,19 +96,22 @@ def book_verify():
             add_book()
 
 def check_book_exist():
-    dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = '"+book_name.get()+"' AND isActive = 1"
+    global new_book_name
+    new_book_name = check_single_quote(book_name.get())
+    dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = '"+new_book_name+"' AND isActive = 1"
     result = readFromDb(dbQuery)
     return result[0]
 
 def add_book():
     with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
         bindata = f.read()
-
+    new_book_author = check_single_quote(author.get())
+    new_book_summary = check_single_quote(summary_scrolledText.get("1.0", "end-1c"))
     dbQuery = """INSERT INTO dbo.Books (Name, Category, Author, Summary, BookContent, isActive)
-                 VALUES('"""+book_name.get()+"""',
+                 VALUES('"""+new_book_name+"""',
                         '"""+search_combobox.get()+"""',
-                        '"""+author.get()+"""',
-                        '"""+summary_scrolledText.get("1.0", "end-1c")+"""',
+                        '"""+new_book_author+"""',
+                        '"""+new_book_summary+"""',
                         ?,1)"""
     result = insertUpdateBookToDb(dbQuery, bindata)
     if result == 1:
