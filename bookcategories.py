@@ -9,6 +9,7 @@ from romance import romance
 def bookcategories():
     global book_categories_screen
     global book_categories_icon
+    global book_categories_image
     global search_entry
     global action_adventure_icon
     global horror_icon
@@ -17,6 +18,7 @@ def bookcategories():
     global back_icon
     book_categories_screen = Toplevel()
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((50, 50), Image.ANTIALIAS))
+    book_categories_image = ImageTk.PhotoImage(Image.open("book_categories_image.png").resize((230, 210), Image.ANTIALIAS))
     action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure.png").resize((110, 120), Image.ANTIALIAS))
     horror_icon = ImageTk.PhotoImage(Image.open("horror.png").resize((110, 120), Image.ANTIALIAS))
     fantasy_icon = ImageTk.PhotoImage(Image.open("fantasy.png").resize((110, 120), Image.ANTIALIAS))
@@ -38,6 +40,7 @@ def bookcategories():
     Button(book_categories_screen, text=txt_search, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = page_not_found).place(x=700,y=80)
  
     Label(book_categories_screen, image = book_categories_icon).place(x=100, y=30)
+    Label(book_categories_screen, image = book_categories_image).place(x=1200, y=100)
     Label(book_categories_screen, text = txt_book_categories, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
 
     Label(book_categories_screen, image = action_adventure_icon).place(x=272, y=237)

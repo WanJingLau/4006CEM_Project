@@ -11,8 +11,10 @@ import guli
 def login():
     global login_screen
     global logo
+    global login_image
     login_screen = Tk()
     logo = ImageTk.PhotoImage(Image.open("logo.png").resize((80, 80), Image.ANTIALIAS))
+    login_image = ImageTk.PhotoImage(Image.open("login_image.png").resize((360, 300), Image.ANTIALIAS))
 
     #define text
     txt_login = "Login"
@@ -33,6 +35,7 @@ def login():
     password = StringVar()
 
     Label(login_screen, image = logo).place(x=649, y=20)
+    Label(login_screen, image = login_image).place(x=1150, y=470)
     Label(login_screen, text = txt_welcome, font = ("Helvetica", 14, "bold")).place(x=562, y = 110)
     Label(login_screen, text = txt_login, font = ("Helvetica", 12, "bold")).place(x=80, y=180)
     Label(login_screen, text = txt_greet, font = ("Helvetica", 12)).place(x=80,y=210)

@@ -5,12 +5,16 @@ from db_conn import insertUpdateBookToDb, readFromDb, insertUpdateDeleteToDb
 def help_center():
     global help_center_screen
     global help_center_icon
+    global help_center_image
     global user_name_entry
     global user_email_address_entry
     global user_question_entry
+    global back_icon
     #variable declaration
     help_center_screen = Toplevel()
     help_center_icon = ImageTk.PhotoImage(Image.open("helpcenter.png").resize((50, 50), Image.ANTIALIAS))
+    help_center_image = ImageTk.PhotoImage(Image.open("help_center_image.png").resize((275, 170), Image.ANTIALIAS))
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     user_name = StringVar()
     user_email_address = StringVar()
     user_question = StringVar()
@@ -26,8 +30,11 @@ def help_center():
     help_center_screen.title(txt_help_center)
     help_center_screen.geometry(geometry_size)
     help_center_screen.state("zoomed")
+    #back button
+    Button(help_center_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(help_center_screen, image = help_center_icon).place(x=100, y=30)
+    Label(help_center_screen, image = help_center_image).place(x=1040, y=90)
     Label(help_center_screen, text = txt_help_center, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
     #help
     Label(help_center_screen, text = txt_help, font = ("Helvetica", 12, "bold"), foreground = "black").place(x=80, y = 130)
@@ -63,3 +70,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    help_center_screen.destroy()

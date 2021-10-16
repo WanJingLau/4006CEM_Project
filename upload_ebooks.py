@@ -7,6 +7,7 @@ from helpers import check_single_quote
 def upload_ebooks():
     global upload_ebooks_screen
     global uploadbooks_icon
+    global upload_ebooks_image
     global search_combobox
     global book_name_entry
     global author_entry
@@ -21,6 +22,7 @@ def upload_ebooks():
     #variable declaration
     upload_ebooks_screen = Toplevel()
     uploadbooks_icon = ImageTk.PhotoImage(Image.open("uploadbooks.png").resize((80, 80), Image.ANTIALIAS))
+    upload_ebooks_image = ImageTk.PhotoImage(Image.open("upload_ebooks_image.png").resize((360, 245), Image.ANTIALIAS))
     book_name = StringVar()
     author = StringVar()
     #text variable declaration
@@ -43,6 +45,7 @@ def upload_ebooks():
     Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
+    Label(upload_ebooks_screen, image = upload_ebooks_image).place(x=1150, y=110)
     Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     #book_name
     Label(upload_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)
