@@ -7,6 +7,7 @@ from helpers import check_single_quote
 def edit_ebooks():
     global edit_ebooks_screen
     global editebooks_icon
+    global edit_ebooks_image
     global back_icon
     global book_combobox
     global book_category_combobox
@@ -20,6 +21,7 @@ def edit_ebooks():
     global lbl_no_file_chosen
     edit_ebooks_screen = Toplevel()
     editebooks_icon = ImageTk.PhotoImage(Image.open("editebooks.png").resize((80, 80), Image.ANTIALIAS))
+    edit_ebooks_image = ImageTk.PhotoImage(Image.open("edit_ebooks_image.png").resize((435, 260), Image.ANTIALIAS))
     book_name = StringVar()
     author = StringVar()
     #text variable declaration
@@ -42,6 +44,7 @@ def edit_ebooks():
     edit_ebooks_screen.geometry(geometry_size)
     #page icon, title
     Label(edit_ebooks_screen, image = editebooks_icon).place(x=80, y=40)
+    Label(edit_ebooks_screen, image = edit_ebooks_image).place(x=1090, y=205)
     Label(edit_ebooks_screen, text = txt_edit_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     #book name selection
     Label(edit_ebooks_screen, text = txt_select_book, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)

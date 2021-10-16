@@ -5,9 +5,13 @@ from db_conn import insertUpdateBookToDb, readFromDb, insertUpdateDeleteToDb
 def check_in_days():
     global check_in_days_screen
     global check_in_days_icon
+    global check_in_days_image
+    global back_icon
     #variable declaration
     check_in_days_screen = Toplevel()
     check_in_days_icon = ImageTk.PhotoImage(Image.open("checkin.png").resize((50, 50), Image.ANTIALIAS))
+    check_in_days_image = ImageTk.PhotoImage(Image.open("check_in_days_image.png").resize((340, 250), Image.ANTIALIAS))
+    back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     #text variable declaration
     txt_check_in_days = "Check In Days"
     geometry_size = "1366x768"
@@ -18,8 +22,11 @@ def check_in_days():
     check_in_days_screen.title(txt_check_in_days)
     check_in_days_screen.geometry(geometry_size)
     check_in_days_screen.state("zoomed")
+    #back button
+    Button(check_in_days_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(check_in_days_screen, image = check_in_days_icon).place(x=100, y=30)
+    Label(check_in_days_screen, image = check_in_days_image).place(x=1000, y=90)
     Label(check_in_days_screen, text = txt_check_in_days, font = ("Helvetica", 38, "bold"), foreground = "black").place(x=180, y = 20)
     #frame
     Frame(check_in_days_screen, background="white", width=400, height=160).place(x=450, y=220)
@@ -45,3 +52,6 @@ def page_not_found():
 
 def delete_page_not_found():
     page_not_found_screen.destroy()
+
+def close_page():
+    check_in_days_screen.destroy()
