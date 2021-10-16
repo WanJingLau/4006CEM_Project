@@ -38,6 +38,7 @@ def forget_password():
     forget_pw_screen.title(txt_title)
     forget_pw_screen.state("zoomed")
     forget_pw_screen.geometry(geometry_size)
+    forget_pw_screen.bind("<Return>", lambda e: reset_verify())
 
 def reset_verify():
     if len(email.get()) == 0 or email.get().isspace():

@@ -64,6 +64,7 @@ def register():
     register_screen.title(txt_title)
     register_screen.state("zoomed")
     register_screen.geometry(geometry_size)
+    register_screen.bind("<Return>", lambda e: register_verify())
 
 def register_verify():
     if len(email.get()) == 0 or email.get().isspace():
