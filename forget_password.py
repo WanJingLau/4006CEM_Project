@@ -25,8 +25,8 @@ def forget_password():
     global email
     global email_entry
     email = StringVar()
-    Label(forget_pw_screen, image = forget_pw_icon).place(x=570, y=40)
-    Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, "bold")).place(x=660, y = 70)
+    Label(forget_pw_screen, image = forget_pw_icon).place(x=80, y=40)
+    Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     Label(forget_pw_screen, text = txt_provide, font = ("Helvetica", 12, "bold")).place(x=80, y = 200)
     Label(forget_pw_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
     email_entry = Entry(forget_pw_screen, font = "Helvetica 12", textvariable = email, width=50)

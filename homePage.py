@@ -10,8 +10,9 @@ from PIL import Image, ImageTk
 from db_conn import readFromDb
 from store_ebooks import store_ebooks
 from upload_ebooks import upload_ebooks
+import guli
 
-def homepage(email):
+def homepage():
     global homepage_screen
     global homepage_icon
     global book_categories_icon
@@ -67,7 +68,7 @@ def homepage(email):
     Button(homepage_screen, text=txt_check_in_days, font = ("Helvetica", 12, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = check_in_days).place(x=650,y=440)
 
     #check if is admin, show edit & delete ebook
-    show_lbl(email)
+    show_lbl()
 
 def page_not_found():
     global page_not_found_screen
@@ -76,7 +77,8 @@ def page_not_found():
     Label(page_not_found_screen, text="Page not found").pack()
     Button(page_not_found_screen, text="OK", command=delete_page_not_found).pack()
 
-def show_lbl(email):
+def show_lbl():
+    email = guli.GuliVariable("email_add").get()
     dbQuery = """SELECT R.Name, U.username
                  FROM dbo.Users U WITH(NOLOCK)
                  INNER JOIN dbo.UserRole UR WITH(NOLOCK) ON UR.UserId = U.Id
