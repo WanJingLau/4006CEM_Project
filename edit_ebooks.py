@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk, messagebox, scrolledtext, filedialog
 from PIL import Image, ImageTk
 from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb, insertUpdateBookToDb
+from helpers import check_single_quote
 
 def edit_ebooks():
     global edit_ebooks_screen
@@ -49,29 +50,29 @@ def edit_ebooks():
     book_combobox.place(x=80, y= 170)
     book_combobox.bind("<<ComboboxSelected>>", lambda e : get_book_detail())
     #book name display
-    Label(edit_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=250)
+    Label(edit_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=200)
     book_name_entry = Entry(edit_ebooks_screen, textvariable = book_name, font = "Helvetica 12", state = DISABLED, width=50)
-    book_name_entry.place(x=80, y=280)
+    book_name_entry.place(x=80, y=230)
     #author
-    Label(edit_ebooks_screen, text = txt_book_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=130)
+    Label(edit_ebooks_screen, text = txt_book_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=200)
     book_author_entry = Entry(edit_ebooks_screen, textvariable = author, font = "Helvetica 12",state = DISABLED, width=50)
-    book_author_entry.place(x=580,y=160)
+    book_author_entry.place(x=580,y=230)
     #book category
-    Label(edit_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=200)
+    Label(edit_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=270)
     book_category_combobox = ttk.Combobox(edit_ebooks_screen, values=("Action/Adventure", "Horror","Fantasy","Romance"), state = DISABLED)
-    book_category_combobox.place(x=80,y=230)
+    book_category_combobox.place(x=80,y=300)
     #upload file
-    Label(edit_ebooks_screen, text = txt_book_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=200)
+    Label(edit_ebooks_screen, text = txt_book_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=270)
     btn_upload_pdf = Button(edit_ebooks_screen, text= txt_file, font = ("Helvetica", 12, "bold"), state = DISABLED, foreground="black", background="light grey", width=16, cursor="hand2", command = UploadAction)
-    btn_upload_pdf.place(x=580,y=230)   
+    btn_upload_pdf.place(x=580,y=300)   
     lbl_no_file_chosen = Label(edit_ebooks_screen, text = txt_no_file_chosen, font = ("Helvetica", 12))
-    lbl_no_file_chosen.place(x=760,y=235)
+    lbl_no_file_chosen.place(x=760,y=305)
     #summary
-    Label(edit_ebooks_screen, text = txt_book_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=270)
+    Label(edit_ebooks_screen, text = txt_book_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=340)
     summary_scrolledText = scrolledtext.ScrolledText(edit_ebooks_screen, state = DISABLED, font = ("Helvetica", 12), width=105, height=10)
-    summary_scrolledText.place(x=80,y=300)
+    summary_scrolledText.place(x=80,y=370)
     #Submit button
-    Button(edit_ebooks_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = edit_book_verify).place(x=590,y=550)
+    Button(edit_ebooks_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = edit_book_verify).place(x=590,y=620)
 
 
 def get_available_book():
@@ -97,9 +98,11 @@ def get_book_detail():
     book_name_entry.delete(0,END)
     book_author_entry.delete(0,END)
     summary_scrolledText.delete(1.0,END)
+    global book_name
+    book_name = check_single_quote(book_combobox.get())
     dbQuery = """SELECT Category, Author, Summary
                  FROM dbo.Books WITH(NOLOCK) 
-                 WHERE Name = '"""+book_combobox.get()+"""'
+                 WHERE Name = '"""+book_name+"""'
                   AND isActive = 1"""
     result1 = readFromDb(dbQuery)
     book_name_entry.insert(0, book_combobox.get())
@@ -128,18 +131,19 @@ def close_page():
 def edit_book():
     global result
     global dbQuery
-
+    new_author = check_single_quote(author.get())
+    new_summary = check_single_quote(summary_scrolledText.get("1.0", "end-1c"))
     dbQuery = """UPDATE dbo.Books
-                 SET Author = '"""+author.get()+"""'
-                 AND Summary = '"""+summary_scrolledText.get("1.0", "end-1c")+"""' """
+                 SET Author = '"""+new_author+"""'
+                 AND Summary = '"""+new_summary+"""' """
     
     if lbl_no_file_chosen.cget("text") != txt_no_file_chosen:
         with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
             bindata = f.read()
-        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = '"+book_combobox.get()+"'"
+        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = '"+book_name+"'"
         result = insertUpdateBookToDb(dbQuery, bindata)
     else:
-        dbQuery = dbQuery + "WHERE Name = '"+book_combobox.get()+"'"
+        dbQuery = dbQuery + "WHERE Name = '"+book_name+"'"
         result = insertUpdateDeleteToDb(dbQuery)
     
     if result == 1:
