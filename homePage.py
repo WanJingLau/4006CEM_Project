@@ -3,7 +3,6 @@ from delete_ebooks import delete_ebooks
 from edit_ebooks import edit_ebooks
 from edit_profile import edit_profile
 from help_center import help_center
-from settings import settings
 from tkinter import *
 from tkinter.constants import N
 from bookcategories import bookcategories
