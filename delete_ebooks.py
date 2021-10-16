@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb
+from helpers import check_single_quote
 
 def delete_ebooks():
     global delete_ebooks_screen
@@ -66,9 +67,11 @@ def get_book_detail():
     book_name_entry.delete(0,END)
     book_category_entry.delete(0,END)
     book_author_entry.delete(0,END)
+    global book_name
+    book_name = check_single_quote(book_combobox.get())
     dbQuery = """SELECT Category, Author
                  FROM dbo.Books WITH(NOLOCK) 
-                 WHERE Name = '"""+book_combobox.get()+"""'
+                 WHERE Name = '"""+book_name+"""'
                   AND isActive = 1"""
     result1 = readFromDb(dbQuery)
     book_name_entry.insert(0, book_combobox.get())
@@ -85,7 +88,7 @@ def delete_verify():
     else:
         delete = messagebox.askyesno("Delete E-Books","Are you sure you want to delete this e-book?", parent = delete_ebooks_screen)
         if delete:
-            dbQuery = "UPDATE dbo.Books SET isActive = 0 WHERE Name = '"+book_combobox.get()+"'"
+            dbQuery = "UPDATE dbo.Books SET isActive = 0 WHERE Name = '"+book_name+"'"
             result = insertUpdateDeleteToDb(dbQuery)
             if result == 1:
                 messagebox.showinfo("Success", "E-Book Delete Successfully", parent = delete_ebooks_screen)

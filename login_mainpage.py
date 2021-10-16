@@ -6,6 +6,7 @@ from register import register
 from forget_password import forget_password
 from homePage import homepage
 from db_conn import readFromDb
+import guli
 
 def login():
     global login_screen
@@ -50,6 +51,7 @@ def login():
     lbl_register_acc = Label(login_screen, text = txt_register_acc, font = ("Helvetica", 12), foreground = "blue", cursor="hand2")
     lbl_register_acc.place(x=575,y=550)
     lbl_register_acc.bind("<Button-1>", lambda e: register())
+    login_screen.bind("<Return>", lambda e: login_verify())
 
     #login screen
     login_screen.title(txt_title)
@@ -74,7 +76,8 @@ def login_verify():
         if result == None:
             entry("Wrong Email/ Invalid Password")
         else:
-            homepage(email1)
+            guli.GuliVariable("email_add").setValue(email1)
+            homepage()
 
  # Designing popup for entry empty/ login invalid password
 def entry(entry):

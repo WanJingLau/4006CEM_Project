@@ -43,29 +43,29 @@ def upload_ebooks():
     Button(upload_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title
     Label(upload_ebooks_screen, image = uploadbooks_icon).place(x=80, y=40)
-    Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold"), foreground = "black").place(x=180, y = 70)
+    Label(upload_ebooks_screen, text = txt_upload_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
     #book_name
-    Label(upload_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=130)
+    Label(upload_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)
     book_name_entry = Entry(upload_ebooks_screen, textvariable = book_name, font = "Helvetica 12", width=50)
-    book_name_entry.place(x=80,y=160)
+    book_name_entry.place(x=80,y=170)
     book_name_entry.focus_set()
     #author
-    Label(upload_ebooks_screen, text = txt_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=130)
+    Label(upload_ebooks_screen, text = txt_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=140)
     author_entry = Entry(upload_ebooks_screen, textvariable = author, font = "Helvetica 12", width=50)
-    author_entry.place(x=580,y=160)
+    author_entry.place(x=580,y=170)
     #book category
-    Label(upload_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=200)
+    Label(upload_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=210)
     search_combobox = ttk.Combobox(upload_ebooks_screen, values=("Action/Adventure", "Horror","Fantasy","Romance"), state = "readonly") 
-    search_combobox.place(x=80,y=230)
+    search_combobox.place(x=80,y=240)
     #upload file
-    Label(upload_ebooks_screen, text = txt_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=200)
-    Button(upload_ebooks_screen, text= txt_file, font = ("Helvetica", 12, "bold"), foreground="black", background="light grey", width=16, cursor="hand2", command = UploadAction).place(x=580,y=230)   
+    Label(upload_ebooks_screen, text = txt_content, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=580,y=210)
+    Button(upload_ebooks_screen, text= txt_file, font = ("Helvetica", 12, "bold"), foreground="black", background="light grey", width=16, cursor="hand2", command = UploadAction).place(x=580,y=240)   
     lbl_no_file_chosen = Label(upload_ebooks_screen, text = txt_no_file_chosen, font = ("Helvetica", 12))
-    lbl_no_file_chosen.place(x=760,y=235)
+    lbl_no_file_chosen.place(x=760,y=245)
     #summary
-    Label(upload_ebooks_screen, text = txt_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=270)
+    Label(upload_ebooks_screen, text = txt_summary, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=280)
     summary_scrolledText = scrolledtext.ScrolledText(upload_ebooks_screen, font = ("Helvetica", 12), width=105, height=10)
-    summary_scrolledText.place(x=80,y=300)
+    summary_scrolledText.place(x=80,y=310)
     #Submit button
     Button(upload_ebooks_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = book_verify).place(x=590,y=550)
 
