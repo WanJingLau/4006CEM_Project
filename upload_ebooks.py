@@ -101,7 +101,7 @@ def book_verify():
 def check_book_exist():
     global new_book_name
     new_book_name = check_single_quote(book_name.get())
-    dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = '"+new_book_name+"' AND isActive = 1"
+    dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"+new_book_name+"' AND isActive = 1"
     result = readFromDb(dbQuery)
     return result
 
@@ -111,10 +111,10 @@ def add_book():
     new_book_author = check_single_quote(author.get())
     new_book_summary = check_single_quote(summary_scrolledText.get("1.0", "end-1c"))
     dbQuery = """INSERT INTO dbo.Books (Name, Category, Author, Summary, BookContent, isActive)
-                 VALUES('"""+new_book_name+"""',
-                        '"""+search_combobox.get()+"""',
-                        '"""+new_book_author+"""',
-                        '"""+new_book_summary+"""',
+                 VALUES(N'"""+new_book_name+"""',
+                        N'"""+search_combobox.get()+"""',
+                        N'"""+new_book_author+"""',
+                        N'"""+new_book_summary+"""',
                         ?,1)"""
     result = insertUpdateBookToDb(dbQuery, bindata)
     if result == 1:

@@ -74,7 +74,7 @@ def get_book_detail():
     book_name = check_single_quote(book_combobox.get())
     dbQuery = """SELECT Category, Author
                  FROM dbo.Books WITH(NOLOCK) 
-                 WHERE Name = '"""+book_name+"""'
+                 WHERE Name = N'"""+book_name+"""'
                   AND isActive = 1"""
     result1 = readFromDb(dbQuery)
     book_name_entry.insert(0, book_combobox.get())
@@ -91,7 +91,7 @@ def delete_verify():
     else:
         delete = messagebox.askyesno("Delete E-Books","Are you sure you want to delete this e-book?", parent = delete_ebooks_screen)
         if delete:
-            dbQuery = "UPDATE dbo.Books SET isActive = 0 WHERE Name = '"+book_name+"'"
+            dbQuery = "UPDATE dbo.Books SET isActive = 0 WHERE Name = N'"+book_name+"'"
             result = insertUpdateDeleteToDb(dbQuery)
             if result == 1:
                 messagebox.showinfo("Success", "E-Book Delete Successfully", parent = delete_ebooks_screen)

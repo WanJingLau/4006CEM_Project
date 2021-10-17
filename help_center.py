@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import messagebox, scrolledtext
 from PIL import Image, ImageTk
-from db_conn import insertUpdateDeleteToDb
+from db_conn import insertUpdateDeleteToDb, readFromDb
 from helpers import check_single_quote
-import guli
+import guli, smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def help_center():
     global help_center_screen
@@ -52,11 +54,12 @@ def question_verify():
         question = check_single_quote(question_scrolledText.get("1.0", "end-1c"))
         email_address = guli.GuliVariable("email_add").get()
         dbQuery = """INSERT INTO [dbo].[UserHelpCenter] ([UserId], [Question])
-                     SELECT Id, '""" +question+"""'
+                     SELECT Id, N'""" +question+"""'
                      FROM dbo.Users WITH(NOLOCK)
-                     WHERE email = '"""+email_address+"""'"""
+                     WHERE email = N'"""+email_address+"""'"""
         result = insertUpdateDeleteToDb(dbQuery)
         if result == 1:
+            send_email(email_address)
             messagebox.showinfo("Success", "Question submitted. Kindly allow 3-5 working days for a response via e-mail. Thank you and have fun.", parent = help_center_screen)
             close_page()
         else:
@@ -64,3 +67,38 @@ def question_verify():
 
 def entry(entry):
    messagebox.showerror("Failed Submit", entry, parent = help_center_screen)
+
+def send_email(email):
+    sender_email = "ebook4006@gmail.com"
+    sender_password = "ebookwjwc"
+    receiver_email = "lauwan08@gmail.com"
+    dbQuery = "SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = N'"+email+"'"
+    username = readFromDb(dbQuery)
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = "NEW QUESTION SUBMITTED IN E-BOOK SYSTEM" 
+    email_body_info = """Hi, user/admin has submitted new question via help center. 
+
+Please find details below:
+
+
+Username        : """+username[0]+"""
+
+Email address : """+email+"""
+
+Question          : """+question_scrolledText.get("1.0", "end-1c")+"""
+
+
+Thanks.
+
+
+***** THIS IS AN AUTOMATED EMAIL. DO NOT REPLY *****"""
+
+    message.attach(MIMEText(email_body_info, 'plain'))
+
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    server.login(sender_email,sender_password)
+    server.sendmail(sender_email,receiver_email,message.as_string())
+    server.quit()

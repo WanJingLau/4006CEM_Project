@@ -47,7 +47,7 @@ def reset_verify():
     if len(email.get()) == 0 or email.get().isspace():
         entry("Email address is empty. Please enter an email address.")
     else:
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
+        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = N'"+email.get().lower()+"'"
         result = readFromDb(dbQuery)
         if result == None:
             email_entry.delete(0, END)
@@ -63,7 +63,7 @@ def reset_password():
     new_pw = pw_generator()
     dbQuery = """UPDATE dbo.Users 
                  SET password_hash = HASHBYTES('SHA2_512', '"""+new_pw+"""')
-                 WHERE email = '"""+email_info+"""'"""
+                 WHERE email = N'"""+email_info+"""'"""
     
     result = insertUpdateDeleteToDb(dbQuery)
     if result == 1:
@@ -84,7 +84,7 @@ def pw_generator():
 def send_email(email, password):
     sender_email = "ebook4006@gmail.com"
     sender_password = "ebookwjwc"
-    dbQuery = "SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email+"'"
+    dbQuery = "SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = N'"+email+"'"
     username = readFromDb(dbQuery)
     message = MIMEMultipart()
     message["From"] = sender_email

@@ -70,7 +70,7 @@ def login_verify():
         password1 = password.get()
     
         dbQuery = """SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) 
-                     WHERE email = '"""+email1+"""' 
+                     WHERE email = N'"""+email1+"""' 
                      AND password_hash = HASHBYTES('SHA2_512', '"""+password1+"""')"""
         
         result = readFromDb(dbQuery)
