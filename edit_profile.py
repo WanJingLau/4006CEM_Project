@@ -121,7 +121,7 @@ def get_option():
 def getCurrentUsername():
     global email_address
     email_address = guli.GuliVariable("email_add").get()
-    dbQuery = """SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'"""
+    dbQuery = """SELECT username FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'"""
     result = readFromDb(dbQuery)
     entry1.insert(0, result[0])
     entry1.config(state=DISABLED)
@@ -131,8 +131,8 @@ def username_verify():
             entry("New username is empty. Please enter username")
         else:
             dbQuery = """UPDATE dbo.Users
-                         SET username = '"""+username.get()+"""'
-                         WHERE email = '"""+email_address+"""'"""
+                         SET username = N'"""+username.get()+"""'
+                         WHERE email = N'"""+email_address+"""'"""
             result1 = insertUpdateDeleteToDb(dbQuery)
             if result1 == 1:
                 change_success("Change Username Successfully")
@@ -159,7 +159,7 @@ def password_verify():
     else:
         email = guli.GuliVariable("email_add").get()
         dbQuery = """SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) 
-                     WHERE email = '"""+email+"""' 
+                     WHERE email = N'"""+email+"""' 
                      AND password_hash = HASHBYTES('SHA2_512', '"""+old_password.get()+"""')"""
         
         result = readFromDb(dbQuery)
@@ -168,7 +168,7 @@ def password_verify():
         else:
             dbQuery1 = """UPDATE dbo.Users
                           SET password_hash = HASHBYTES('SHA2_512', '"""+new_password.get()+"""')
-                          WHERE email = '"""+email+"""'"""
+                          WHERE email = N'"""+email+"""'"""
             result1 = insertUpdateDeleteToDb(dbQuery1)
             if result1 == 1:
                 change_success("Change Password Successfully")

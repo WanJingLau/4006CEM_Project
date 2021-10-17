@@ -83,7 +83,7 @@ def register_verify():
     elif agree.get() != 1:
         entry("Please tick to agree the Terms of Services and Privacy Policy.")
     else:
-        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = '"+email.get().lower()+"'"
+        dbQuery = "SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) WHERE email = N'"+email.get().lower()+"'"
         result = readFromDb(dbQuery)
         if result == None:
             register_user()
@@ -99,13 +99,13 @@ def register_user():
     password_info = password.get()
 
     dbQueryInsertUser = """INSERT INTO dbo.Users (username, password_hash, email) 
-                           VALUES('"""+username_info+"""', 
+                           VALUES(N'"""+username_info+"""', 
                                   HASHBYTES('SHA2_512', '"""+password_info+"""'), 
-                                  '"""+email_info+"""')"""
+                                  N'"""+email_info+"""')"""
 
     dbQueryDeleteUser = """DELETE FROM dbo.Users 
-                           WHERE email='"""+email_info+"""'
-                           AND username='"""+username_info+"""'"""
+                           WHERE email=N'"""+email_info+"""'
+                           AND username=N'"""+username_info+"""'"""
 
     dbQueryInsertRole = """INSERT INTO dbo.UserRole (UserId, RoleId)
                            SELECT U.Id, R.Id
@@ -120,8 +120,8 @@ def register_user():
     dbQueryDeleteRole = """DELETE FROM dbo.UserRole
                            WHERE UserId = (
                                             SELECT Id FROM dbo.Users WITH(NOLOCK)
-                                            WHERE email = '"""+email_info+"""'
-                                            AND username='"""+username_info+"""'
+                                            WHERE email = N'"""+email_info+"""'
+                                            AND username=N'"""+username_info+"""'
                                           )"""
 
     dbQueryInsertSetting = """INSERT INTO dbo.UserSetting (UserId, SettingId, isActive)
@@ -131,7 +131,7 @@ def register_user():
                               (
                                   SELECT Id FROM dbo.Settings WITH(NOLOCK)
                               )S
-                              WHERE U.email = '"""+email_info+"""'"""
+                              WHERE U.email = N'"""+email_info+"""'"""
     
     result_insert_user = insertUpdateDeleteToDb(dbQueryInsertUser)
     if result_insert_user == 1:
