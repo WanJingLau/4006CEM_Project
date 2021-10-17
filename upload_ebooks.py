@@ -93,7 +93,7 @@ def book_verify():
         entry("Book Summary is empty. Please enter Book Summary.")
     else:
         book_exist = check_book_exist()
-        if book_exist == 1:
+        if book_exist != None:
             entry("Similar Book Name already added. Please add other new book.")
         else:
             add_book()
@@ -103,7 +103,7 @@ def check_book_exist():
     new_book_name = check_single_quote(book_name.get())
     dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = '"+new_book_name+"' AND isActive = 1"
     result = readFromDb(dbQuery)
-    return result[0]
+    return result
 
 def add_book():
     with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
