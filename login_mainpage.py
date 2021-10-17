@@ -68,8 +68,6 @@ def login_verify():
     else:
         email1 = email.get().lower()
         password1 = password.get()
-        email_entry.delete(0, END)
-        password_entry.delete(0, END)
     
         dbQuery = """SELECT TOP 1 1 FROM dbo.Users WITH(NOLOCK) 
                      WHERE email = '"""+email1+"""' 
@@ -80,6 +78,9 @@ def login_verify():
             entry("Wrong Email/ Invalid Password")
         else:
             guli.GuliVariable("email_add").setValue(email1)
+            email_entry.delete(0, END)
+            password_entry.delete(0, END)
+            email_entry.focus_set()
             homepage()
 
  # Designing popup for entry empty/ login invalid password
