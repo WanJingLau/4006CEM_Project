@@ -1,5 +1,5 @@
 from comment import comment
-from review import review
+from review_ebooks import review_ebooks
 from store_ebooks import store_ebooks
 from tkinter import *
 from PIL import Image, ImageTk
@@ -44,7 +44,7 @@ def bookdetails():
     Button(book_details_screen, text= txt_comment, font = ("Helvetica", 15, "bold"), foreground="black", width=20, height=1, cursor="hand2", command = comment).place(x=362,y=350)
     Button(book_details_screen, text= txt_read, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = page_not_found).place(x=121,y=629)
     Button(book_details_screen, text= txt_store, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = store_ebooks).place(x=562,y=629)
-    Button(book_details_screen, text= txt_review, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = review).place(x=1003,y=629)
+    Button(book_details_screen, text= txt_review, font = ("Helvetica", 15, "bold"), foreground="black", width=16, height=1, cursor="hand2", command = review_ebooks).place(x=1003,y=629)
 
     book_details_screen.title(txt_book_details)
     book_details_screen.state("zoomed")

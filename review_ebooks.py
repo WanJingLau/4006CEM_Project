@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
-def review():
+def review_ebooks():
     global review_screen
     global review_image
     global starrate_icon
