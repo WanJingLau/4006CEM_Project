@@ -116,38 +116,17 @@ def register_user():
                                 WHERE Name = 'user'
                            )R
                            WHERE U.email = '"""+email_info+"""'"""
-
-    dbQueryDeleteRole = """DELETE FROM dbo.UserRole
-                           WHERE UserId = (
-                                            SELECT Id FROM dbo.Users WITH(NOLOCK)
-                                            WHERE email = N'"""+email_info+"""'
-                                            AND username=N'"""+username_info+"""'
-                                          )"""
-
-    dbQueryInsertSetting = """INSERT INTO dbo.UserSetting (UserId, SettingId, isActive)
-                              SELECT U.Id, S.Id, 0
-                              FROM dbo.Users U WITH(NOLOCK)
-                              OUTER APPLY
-                              (
-                                  SELECT Id FROM dbo.Settings WITH(NOLOCK)
-                              )S
-                              WHERE U.email = N'"""+email_info+"""'"""
     
     result_insert_user = insertUpdateDeleteToDb(dbQueryInsertUser)
     if result_insert_user == 1:
         result_insert_role = insertUpdateDeleteToDb(dbQueryInsertRole)
         if result_insert_role == 1:
-            result_insert_setting = insertUpdateDeleteToDb(dbQueryInsertSetting)
-            if result_insert_setting != None:
                 email_entry.delete(0, END)
                 username_entry.delete(0, END)
                 password_entry.delete(0, END)
                 confirm_password_entry.delete(0, END)
                 register_success()
                 return
-            else:
-                insertUpdateDeleteToDb(dbQueryDeleteRole)
-                insertUpdateDeleteToDb(dbQueryDeleteUser)
         else:
             insertUpdateDeleteToDb(dbQueryDeleteUser)
 
