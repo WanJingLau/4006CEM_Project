@@ -45,8 +45,9 @@ def store_ebooks():
     canvas_scrollbar = ttk.Scrollbar(scroll_frame, orient = VERTICAL, command=scroll_canvas.yview)
     canvas_scrollbar.pack(side=RIGHT,fill=Y)
     scroll_canvas.configure(yscrollcommand=canvas_scrollbar.set)
+    store_ebooks_screen.bind("<MouseWheel>", lambda e: scroll(e))
     scroll_frame.bind("<Configure>", lambda e: scroll_canvas.configure(scrollregion=scroll_canvas.bbox(ALL)))
-    scroll_canvas.bind_all("<MouseWheel>", scroll)
+
     #2nd frame
     scroll_frame2 = Frame(scroll_canvas)
     scroll_canvas.create_window((0,0), window=scroll_frame2, anchor=NW)
