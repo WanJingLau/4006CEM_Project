@@ -4,7 +4,8 @@ from PIL import Image, ImageTk
 from download_ebooks import download_ebooks
 from read_ebooks import read_ebooks
 from review_ebooks import review_ebooks
-from db_conn import readAllFromDb, insertUpdateDeleteToDb
+from db_conn import readAllFromDb, insertUpdateDeleteToDb, readFromDb
+from helpers import check_single_quote
 import guli
 
 #favourite books
@@ -118,8 +119,21 @@ def delete_favourite_book(book_name):
             messagebox.showerror("Failed Delete", "E-Book Delete Failed. Please try again.", parent = store_ebooks_screen)
 
 def review_book(book_name):
-    guli.GuliVariable("review_book").setValue(book_name)
-    review_ebooks()
+    book_name1 = check_single_quote(book_name)
+    dbQuery = """SELECT 1 
+                 FROM dbo.UserBookRating
+                 WHERE UserId = (
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                )
+                 AND BookId = (
+                                    SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = '"""+book_name1+"""'
+                              )"""
+    result = readFromDb(dbQuery)
+    if result == None:
+        guli.GuliVariable("review_book").setValue(book_name)
+        review_ebooks()
+    else:
+        messagebox.showinfo("Review Failed", "You have reviewed this book before. Please select another book. Thanks.", parent = store_ebooks_screen)
 
 def refresh_list():
     for widget in scroll_frame2.winfo_children():
