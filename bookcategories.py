@@ -1,10 +1,10 @@
 from action_adventure import action_adventure
 from tkinter import *
 from PIL import Image, ImageTk
-from db_conn import readFromDb, insertUpdateDeleteToDb
 from fantasy import fantasy
 from horror import horror
 from romance import romance
+from search_ebooks import search_ebooks
 
 def bookcategories():
     global book_categories_screen
@@ -37,7 +37,7 @@ def bookcategories():
 
     search_entry = Entry(book_categories_screen, font = "Helvetica 15", textvariable = txt_search, width=50)
     search_entry.place(x=100,y=90) 
-    Button(book_categories_screen, text=txt_search, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = page_not_found).place(x=700,y=80)
+    Button(book_categories_screen, text=txt_search, font = ("Helvetica", 15, "bold"), foreground="black", width=10, height=1, cursor="hand2", command = search_ebooks).place(x=700,y=80)
  
     Label(book_categories_screen, image = book_categories_icon).place(x=100, y=30)
     Label(book_categories_screen, image = book_categories_image).place(x=1200, y=100)
