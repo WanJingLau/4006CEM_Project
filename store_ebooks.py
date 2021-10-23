@@ -4,7 +4,8 @@ from PIL import Image, ImageTk
 from download_ebooks import download_ebooks
 from read_ebooks import read_ebooks
 from review_ebooks import review_ebooks
-from db_conn import readAllFromDb, insertUpdateDeleteToDb
+from db_conn import readAllFromDb, insertUpdateDeleteToDb, readFromDb
+from helpers import check_single_quote
 import guli
 
 #favourite books
@@ -14,6 +15,7 @@ def store_ebooks():
     global favorite_book_image
     global back_icon
     global scroll_frame2
+    global scroll_canvas
     store_ebooks_screen = Toplevel()
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((80, 80), Image.ANTIALIAS))
     favorite_book_image = ImageTk.PhotoImage(Image.open("favorite_book_image.png").resize((170, 160), Image.ANTIALIAS))
@@ -44,11 +46,15 @@ def store_ebooks():
     canvas_scrollbar.pack(side=RIGHT,fill=Y)
     scroll_canvas.configure(yscrollcommand=canvas_scrollbar.set)
     scroll_frame.bind("<Configure>", lambda e: scroll_canvas.configure(scrollregion=scroll_canvas.bbox(ALL)))
+    scroll_canvas.bind_all("<MouseWheel>", scroll)
     #2nd frame
     scroll_frame2 = Frame(scroll_canvas)
     scroll_canvas.create_window((0,0), window=scroll_frame2, anchor=NW)
     #display favourite book
     display_favourite_book()
+
+def scroll(event):
+    scroll_canvas.yview_scroll(int(-1*(event.delta/120)), UNITS)
 
 def close_page():
     store_ebooks_screen.destroy()
@@ -81,9 +87,9 @@ def get_favourite_book():
     email_address = guli.GuliVariable("email_add").get()
     dbQuery = """SELECT B.Name
                  FROM dbo.UserBookStore UBS WITH(NOLOCK)
-                 INNER JOIN dbo.Books B WITH(NOLOCK) ON B.Id = UBS.BookId
+                 INNER JOIN dbo.Books B WITH(NOLOCK) ON B.Id = UBS.BookId AND B.isActive = 1
                  WHERE UBS.UserId = (
-                                        SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                        SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
                                     )
                  AND UBS.isActive = 1
                  ORDER BY UBS.Id ASC"""
@@ -104,10 +110,10 @@ def delete_favourite_book(book_name):
         dbQuery = """UPDATE dbo.UserBookStore 
                      SET isActive = 0 
                      WHERE BookId = (
-                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = '"""+book_name+"""'
+                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name+"""'
                                     )
                      AND UserId = (
-                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
                                   )
                      AND isActive = 1"""
         result = insertUpdateDeleteToDb(dbQuery)
@@ -118,8 +124,21 @@ def delete_favourite_book(book_name):
             messagebox.showerror("Failed Delete", "E-Book Delete Failed. Please try again.", parent = store_ebooks_screen)
 
 def review_book(book_name):
-    guli.GuliVariable("review_book").setValue(book_name)
-    review_ebooks()
+    book_name1 = check_single_quote(book_name)
+    dbQuery = """SELECT 1 
+                 FROM dbo.UserBookRating WITH(NOLOCK)
+                 WHERE UserId = (
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
+                                )
+                 AND BookId = (
+                                    SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name1+"""' AND isActive = 1
+                              )"""
+    result = readFromDb(dbQuery)
+    if result == None:
+        guli.GuliVariable("review_book").setValue(book_name)
+        review_ebooks()
+    else:
+        messagebox.showinfo("Review Failed", "You have reviewed this book before. Please select another book. Thanks.", parent = store_ebooks_screen)
 
 def refresh_list():
     for widget in scroll_frame2.winfo_children():
