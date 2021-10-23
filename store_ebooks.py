@@ -15,6 +15,7 @@ def store_ebooks():
     global favorite_book_image
     global back_icon
     global scroll_frame2
+    global scroll_canvas
     store_ebooks_screen = Toplevel()
     store_ebooks_icon = ImageTk.PhotoImage(Image.open("storebooks.png").resize((80, 80), Image.ANTIALIAS))
     favorite_book_image = ImageTk.PhotoImage(Image.open("favorite_book_image.png").resize((170, 160), Image.ANTIALIAS))
@@ -45,11 +46,15 @@ def store_ebooks():
     canvas_scrollbar.pack(side=RIGHT,fill=Y)
     scroll_canvas.configure(yscrollcommand=canvas_scrollbar.set)
     scroll_frame.bind("<Configure>", lambda e: scroll_canvas.configure(scrollregion=scroll_canvas.bbox(ALL)))
+    scroll_canvas.bind_all("<MouseWheel>", scroll)
     #2nd frame
     scroll_frame2 = Frame(scroll_canvas)
     scroll_canvas.create_window((0,0), window=scroll_frame2, anchor=NW)
     #display favourite book
     display_favourite_book()
+
+def scroll(event):
+    scroll_canvas.yview_scroll(int(-1*(event.delta/120)), UNITS)
 
 def close_page():
     store_ebooks_screen.destroy()
@@ -82,9 +87,9 @@ def get_favourite_book():
     email_address = guli.GuliVariable("email_add").get()
     dbQuery = """SELECT B.Name
                  FROM dbo.UserBookStore UBS WITH(NOLOCK)
-                 INNER JOIN dbo.Books B WITH(NOLOCK) ON B.Id = UBS.BookId
+                 INNER JOIN dbo.Books B WITH(NOLOCK) ON B.Id = UBS.BookId AND B.isActive = 1
                  WHERE UBS.UserId = (
-                                        SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                        SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
                                     )
                  AND UBS.isActive = 1
                  ORDER BY UBS.Id ASC"""
@@ -105,10 +110,10 @@ def delete_favourite_book(book_name):
         dbQuery = """UPDATE dbo.UserBookStore 
                      SET isActive = 0 
                      WHERE BookId = (
-                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = '"""+book_name+"""'
+                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name+"""'
                                     )
                      AND UserId = (
-                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
                                   )
                      AND isActive = 1"""
         result = insertUpdateDeleteToDb(dbQuery)
@@ -121,12 +126,12 @@ def delete_favourite_book(book_name):
 def review_book(book_name):
     book_name1 = check_single_quote(book_name)
     dbQuery = """SELECT 1 
-                 FROM dbo.UserBookRating
+                 FROM dbo.UserBookRating WITH(NOLOCK)
                  WHERE UserId = (
-                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = '"""+email_address+"""'
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
                                 )
                  AND BookId = (
-                                    SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = '"""+book_name1+"""'
+                                    SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name1+"""' AND isActive = 1
                               )"""
     result = readFromDb(dbQuery)
     if result == None:
