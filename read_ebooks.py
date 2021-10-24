@@ -22,8 +22,8 @@ def read_ebooks():
     read_ebooks_screen.title(txt_read_ebooks)
     read_ebooks_screen.state("zoomed")
     read_ebooks_screen.geometry(geometry_size)
-    read_ebooks_screen.overrideredirect(True)
-    read_ebooks_screen.protocol("WM_DELETE_WINDOW", lambda _: disable_event())
+    #read_ebooks_screen.overrideredirect(True)
+    #read_ebooks_screen.protocol("WM_DELETE_WINDOW", lambda _: disable_event())
     #back button
     Button(read_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title & icon
