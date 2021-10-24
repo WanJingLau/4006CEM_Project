@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox
 from tkinter.font import BOLD
-from db_conn import readFromDb
+from db_conn import insertUpdateDeleteToDb, readFromDb
 from reportlab.pdfgen import canvas
 from PIL import Image, ImageTk
 from helpers import check_question_mark, check_single_quote, check_spacing
@@ -78,6 +78,7 @@ def download_pdf():
     lbl_progress.config(text= "Progress: 100%")
     download_ebooks_screen.update_idletasks()
     time.sleep(1)
+    update_download_quota()
     lbl_downloading.config(text="Download completed.")
     messagebox.showinfo("Download Success", "E-Book has downloaded successfully", parent = download_ebooks_screen)
     redirect()
@@ -105,3 +106,16 @@ def redirect():
 
 def close_page():
     download_ebooks_screen.destroy()
+
+def update_download_quota():
+    email_address = guli.GuliVariable("email_add").get()
+
+    dbQuery = """UPDATE dbo.UserCheckIn
+                 SET DownloadQuota = DownloadQuota - 1
+                 WHERE UserId = (
+                                    SELECT Id 
+                                    FROM dbo.Users WITH(NOLOCK) 
+                                    WHERE email = N'"""+email_address+"""'
+                                )"""
+    insertUpdateDeleteToDb(dbQuery)
+    return

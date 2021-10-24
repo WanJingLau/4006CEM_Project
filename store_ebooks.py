@@ -102,8 +102,19 @@ def read_book(book_name):
     read_ebooks()
 
 def download_book(book_name):
-    guli.GuliVariable("download_book").setValue(book_name)
-    download_ebooks()
+    dbQuery = """SELECT DownloadQuota
+                 FROM dbo.UserCheckIn WITH(NOLOCK)
+                 WHERE UserId = (
+                                    SELECT Id 
+                                    FROM dbo.Users WITH(NOLOCK) 
+                                    WHERE email = N'"""+email_address+"""'
+                                )"""
+    result = readFromDb(dbQuery)
+    if result != None and result[0] != 0:
+        guli.GuliVariable("download_book").setValue(book_name)
+        download_ebooks()
+    else:
+        messagebox.showwarning("Failed Download", "Unable to download. You have 0 download quota.", parent = store_ebooks_screen)
 
 def delete_favourite_book(book_name):
     delete = messagebox.askyesno("Delete E-Books","Are you sure you want to delete this e-book from favourite?", parent = store_ebooks_screen)
