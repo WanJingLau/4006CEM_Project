@@ -5,6 +5,7 @@ from db_conn import readFromDb
 from reportlab.pdfgen import canvas
 from PIL import Image, ImageTk
 from helpers import check_question_mark, check_single_quote, check_spacing
+from threading import Thread
 import guli, time
 
 def download_ebooks():
@@ -40,7 +41,7 @@ def download_ebooks():
     progress_bar = ttk.Progressbar(download_ebooks_screen, orient = HORIZONTAL, value=20, length = 400, mode = "determinate")
     progress_bar.place(x=80, y= 320)
     download_ebooks_screen.update_idletasks()
-    get_pdf()
+    Thread(target = get_pdf).start()
 
 def download_action():
     global filename
@@ -60,7 +61,7 @@ def get_pdf():
     ebook1 = check_single_quote(ebook)
     dbQuery = """SELECT BookContent 
                 FROM dbo.Books WITH(NOLOCK)
-                WHERE Name = N'"""+ebook1+"""'"""
+                WHERE Name = N'"""+ebook1+"""' AND isActive = 1"""
     result = readFromDb(dbQuery)
     if result[0] != None:
         download_action()
