@@ -47,7 +47,6 @@ def store_ebooks():
     scroll_canvas.configure(yscrollcommand=canvas_scrollbar.set)
     store_ebooks_screen.bind("<MouseWheel>", lambda e: scroll(e))
     scroll_frame.bind("<Configure>", lambda e: scroll_canvas.configure(scrollregion=scroll_canvas.bbox(ALL)))
-
     #2nd frame
     scroll_frame2 = Frame(scroll_canvas)
     scroll_canvas.create_window((0,0), window=scroll_frame2, anchor=NW)
