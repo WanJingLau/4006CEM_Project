@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
+from tkinter.font import BOLD
 from db_conn import readFromDb, insertUpdateDeleteToDb
 
 def register():
@@ -41,26 +42,26 @@ def register():
 
     Label(register_screen, image = register_icon).place(x=80, y=40)
     Label(register_screen, image = register_image).place(x=950, y=210)
-    Label(register_screen, text = txt_register, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
-    Label(register_screen, text = txt_complete_form, font = ("Helvetica", 12, "bold")).place(x=80, y = 130)
-    Label(register_screen, text = txt_field_required, font = ("Helvetica", 12, "bold"), foreground = "red").place(x=525, y = 130)
-    Label(register_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 190) 
+    Label(register_screen, text = txt_register, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
+    Label(register_screen, text = txt_complete_form, font = ("Helvetica", 12, BOLD)).place(x=80, y = 130)
+    Label(register_screen, text = txt_field_required, font = ("Helvetica", 12, BOLD), foreground = "red").place(x=525, y = 130)
+    Label(register_screen, text = txt_email, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y = 190) 
     email_entry = Entry(register_screen, font = "Helvetica 12", textvariable = email, width=50)
     email_entry.place(x=80,y=220)
     email_entry.focus_set()  
-    Label(register_screen, text = txt_screen_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
+    Label(register_screen, text = txt_screen_name, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y = 260) 
     username_entry = Entry(register_screen, font = "Helvetica 12", textvariable = username, width=50)
     username_entry.place(x=80,y=290) 
-    Label(register_screen, text = txt_enter_password, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 330) 
+    Label(register_screen, text = txt_enter_password, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y = 330) 
     password_entry = Entry(register_screen, font = "Helvetica 12", textvariable = password, width=50,show= '*')
     password_entry.place(x=80,y=360) 
-    Label(register_screen, text = txt_confirm_password, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 400) 
+    Label(register_screen, text = txt_confirm_password, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y = 400) 
     confirm_password_entry = Entry(register_screen, font = "Helvetica 12", textvariable = confirm_password, width=50,show= '*')
     confirm_password_entry.place(x=80,y=430) 
-    Checkbutton(register_screen, font = ("Helvetica", 12, "bold"), text = txt_agree, variable=agree).place(x=80,y=470)
-    Button(register_screen, text=txt_register, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = register_verify).place(x=590,y=550)
-    Label(register_screen, text = txt_have_account, font = ("Helvetica", 12, "bold")).place(x=550, y = 590)
-    lbl_sign_in = Label(register_screen, text = txt_sign_in, font = ("Helvetica", 12, "bold"), cursor="hand2",foreground = "blue")
+    Checkbutton(register_screen, font = ("Helvetica", 12, BOLD), text = txt_agree, variable=agree).place(x=80,y=470)
+    Button(register_screen, text=txt_register, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = register_verify).place(x=590,y=550)
+    Label(register_screen, text = txt_have_account, font = ("Helvetica", 12, BOLD)).place(x=550, y = 590)
+    lbl_sign_in = Label(register_screen, text = txt_sign_in, font = ("Helvetica", 12, BOLD), cursor="hand2",foreground = "blue")
     lbl_sign_in.place(x=750, y = 590)
     lbl_sign_in.bind("<Button-1>", lambda e: register_screen.destroy())
     

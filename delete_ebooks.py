@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.font import BOLD
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb
@@ -33,27 +34,27 @@ def delete_ebooks():
     #page icon, title
     Label(delete_ebooks_screen, image = deleteebooks_icon).place(x=80, y=40)
     Label(delete_ebooks_screen, image = delete_ebooks_image).place(x=990, y=65)
-    Label(delete_ebooks_screen, text = txt_delete_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(delete_ebooks_screen, text = txt_delete_ebooks, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #book name selection
-    Label(delete_ebooks_screen, text = txt_select_book, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=140)
+    Label(delete_ebooks_screen, text = txt_select_book, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80,y=140)
     available_book = get_available_book()
     book_combobox = ttk.Combobox(delete_ebooks_screen, values = available_book, state = "readonly", width = 100)
     book_combobox.place(x=80, y= 170)
     book_combobox.bind("<<ComboboxSelected>>", lambda e : get_book_detail())
     #book name display
-    Label(delete_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=250)
+    Label(delete_ebooks_screen, text = txt_book_name, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80,y=250)
     book_name_entry = Entry(delete_ebooks_screen, font = "Helvetica 12", state = DISABLED, width=80)
     book_name_entry.place(x=80, y=280)
     #book category display
-    Label(delete_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=320)
+    Label(delete_ebooks_screen, text = txt_book_category, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80,y=320)
     book_category_entry = Entry(delete_ebooks_screen, font = "Helvetica 12", state = DISABLED, width=80)
     book_category_entry.place(x=80, y=350)
     #book author display
-    Label(delete_ebooks_screen, text = txt_book_author, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=390)
+    Label(delete_ebooks_screen, text = txt_book_author, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80,y=390)
     book_author_entry = Entry(delete_ebooks_screen, font = "Helvetica 12", state = DISABLED, width=80)
     book_author_entry.place(x=80, y=420)
     #delete button
-    Button(delete_ebooks_screen, text= txt_delete, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = delete_verify).place(x=590,y=500)
+    Button(delete_ebooks_screen, text= txt_delete, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = delete_verify).place(x=590,y=500)
 
 def get_available_book():
     available_book_list = []

@@ -37,25 +37,25 @@ def review_ebooks():
     Label(review_screen, image = review_image).place(x=750, y=140)
     #page title, icon
     Label(review_screen, image=review_icon).place(x=80, y=40)
-    Label(review_screen, text = txt_review, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(review_screen, text = txt_review, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #book title
-    Label(review_screen, text=txt_book_title, font = ("Helvetica", 12, "bold"), foreground="blue").place(x=80,y=140)
+    Label(review_screen, text=txt_book_title, font = ("Helvetica", 12, BOLD), foreground="blue").place(x=80,y=140)
     book_name_entry = Entry(review_screen, textvariable = book_name, font = "Helvetica 12", width=68)
     book_name_entry.place(x=80, y=170)
     review_book_name = guli.GuliVariable("review_book").get()
     book_name_entry.insert(0, review_book_name)
     book_name_entry.config(state=DISABLED)
     #rating
-    Label(review_screen, text = txt_rating, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y=210)
+    Label(review_screen, text = txt_rating, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y=210)
     rating_spinbox = Spinbox(review_screen, from_= 1, to = 5, state="readonly", justify=CENTER, font=("Helvetica", 12, BOLD))
     rating_spinbox.place(x=80, y = 240)
     #comment
-    Label(review_screen, text = txt_comments, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y=280)
+    Label(review_screen, text = txt_comments, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y=280)
     comment_scrolledText = scrolledtext.ScrolledText(review_screen, font = ("Helvetica", 12), width=50, height=5)
     comment_scrolledText.place(x=80,y=310)
     comment_scrolledText.focus_set()
     #Submit button
-    Button(review_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = review_verify).place(x=590,y=500)
+    Button(review_screen, text= txt_submit, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = review_verify).place(x=590,y=500)
 
 def review_verify():
     email_address = guli.GuliVariable("email_add").get()
