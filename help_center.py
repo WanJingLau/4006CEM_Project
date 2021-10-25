@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.font import BOLD
 from tkinter import messagebox, scrolledtext
 from PIL import Image, ImageTk
 from db_conn import insertUpdateDeleteToDb, readFromDb
@@ -33,16 +34,16 @@ def help_center():
     #page title
     Label(help_center_screen, image = help_center_icon).place(x=80, y=40)
     Label(help_center_screen, image = help_center_image).place(x=1040, y=90)
-    Label(help_center_screen, text = txt_help_center, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(help_center_screen, text = txt_help_center, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #help
-    Label(help_center_screen, text = txt_help, font = ("Helvetica", 12, "bold"), foreground = "black").place(x=80, y = 140)
+    Label(help_center_screen, text = txt_help, font = ("Helvetica", 12, BOLD), foreground = "black").place(x=80, y = 140)
     #user_question
-    Label(help_center_screen, text = txt_user_question, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80,y=180)
+    Label(help_center_screen, text = txt_user_question, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80,y=180)
     question_scrolledText = scrolledtext.ScrolledText(help_center_screen, font = ("Helvetica", 12), width=105, height=10)
     question_scrolledText.place(x=80,y=210)
     question_scrolledText.focus_set()
     #Submit button
-    Button(help_center_screen, text= txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = question_verify).place(x=590,y=500)
+    Button(help_center_screen, text= txt_submit, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = question_verify).place(x=590,y=500)
 
 def close_page():
     help_center_screen.destroy()

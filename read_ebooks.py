@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox, ttk
+from tkinter.font import BOLD
 from db_conn import readFromDb
 from PIL import Image, ImageTk
 from helpers import check_single_quote
@@ -28,9 +29,9 @@ def read_ebooks():
     Button(read_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title & icon
     Label(read_ebooks_screen, image = read_ebooks_icon).place(x=80, y=40)
-    Label(read_ebooks_screen, text = txt_read_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(read_ebooks_screen, text = txt_read_ebooks, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #book title
-    Label(read_ebooks_screen, text = "Book Title: " + guli.GuliVariable("read_book").get(), font = ("Helvetica", 12, "bold")).place(x=80, y=140)
+    Label(read_ebooks_screen, text = "Book Title: " + guli.GuliVariable("read_book").get(), font = ("Helvetica", 12, BOLD)).place(x=80, y=140)
     #get book content
     get_book_content()
     generate_temp()

@@ -1,6 +1,7 @@
 import random
 import smtplib
 from tkinter import *
+from tkinter.font import BOLD
 from tkinter import messagebox
 from tkinter.constants import N
 from PIL import Image, ImageTk
@@ -28,14 +29,14 @@ def forget_password():
     global email_entry
     email = StringVar()
     Label(forget_pw_screen, image = forget_pw_icon).place(x=80, y=40)
-    Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(forget_pw_screen, text = txt_forget_pw, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     Label(forget_pw_screen, image = forget_password_image).place(x=900, y=400)
-    Label(forget_pw_screen, text = txt_provide, font = ("Helvetica", 12, "bold")).place(x=80, y = 200)
-    Label(forget_pw_screen, text = txt_email, font = ("Helvetica", 12, "bold"), foreground = "blue").place(x=80, y = 260) 
+    Label(forget_pw_screen, text = txt_provide, font = ("Helvetica", 12, BOLD)).place(x=80, y = 200)
+    Label(forget_pw_screen, text = txt_email, font = ("Helvetica", 12, BOLD), foreground = "blue").place(x=80, y = 260) 
     email_entry = Entry(forget_pw_screen, font = "Helvetica 12", textvariable = email, width=50)
     email_entry.place(x=80,y=290)
     email_entry.focus_set()
-    Button(forget_pw_screen, text=txt_submit, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = reset_verify).place(x=590,y=500) 
+    Button(forget_pw_screen, text=txt_submit, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2", command = reset_verify).place(x=590,y=500) 
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     Button(forget_pw_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     forget_pw_screen.title(txt_title)

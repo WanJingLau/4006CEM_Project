@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
+from tkinter.font import BOLD
 from db_conn import readFromDb, insertUpdateDeleteToDb
 import guli
 
@@ -38,23 +39,23 @@ def edit_profile():
     #page title
     Label(edit_profile_screen, image = profile_icon).place(x=80, y=40)
     Label(edit_profile_screen, image = edit_profile_image).place(x=1150, y=90)
-    Label(edit_profile_screen, text = txt_edit_profile, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(edit_profile_screen, text = txt_edit_profile, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #option to change
-    Label(edit_profile_screen, text = "Select option to change",font = ("Helvetica", 12, "bold"), foreground="blue").place(x = 80, y=140)
+    Label(edit_profile_screen, text = "Select option to change",font = ("Helvetica", 12, BOLD), foreground="blue").place(x = 80, y=140)
     option_combobox = ttk.Combobox(edit_profile_screen, values=(txt_username,txt_password), state = "readonly", width=30) 
     option_combobox.place(x=80,y=170)
     option_combobox.bind("<<ComboboxSelected>>", lambda e : get_option())
     #entry1
-    lbl1 = Label(edit_profile_screen, font = ("Helvetica", 12, "bold"), foreground = "blue")
+    lbl1 = Label(edit_profile_screen, font = ("Helvetica", 12, BOLD), foreground = "blue")
     entry1 = Entry(edit_profile_screen, font = "Helvetica 12", width=50)
     #entry2
-    lbl2 = Label(edit_profile_screen, font = ("Helvetica", 12, "bold"), foreground = "blue")
+    lbl2 = Label(edit_profile_screen, font = ("Helvetica", 12, BOLD), foreground = "blue")
     entry2 = Entry(edit_profile_screen, font = "Helvetica 12", width=50)
     #entry3
-    lbl3 = Label(edit_profile_screen, font = ("Helvetica", 12, "bold"), foreground = "blue")    
+    lbl3 = Label(edit_profile_screen, font = ("Helvetica", 12, BOLD), foreground = "blue")    
     entry3 = Entry(edit_profile_screen, font = "Helvetica 12", width=50)
     #submit button
-    submit_button = Button(edit_profile_screen, text= txt_save, font = ("Helvetica", 12, "bold"), foreground="white", background="blue", width=20, height=1, cursor="hand2")
+    submit_button = Button(edit_profile_screen, text= txt_save, font = ("Helvetica", 12, BOLD), foreground="white", background="blue", width=20, height=1, cursor="hand2")
     
 def close_page():
     edit_profile_screen.destroy()

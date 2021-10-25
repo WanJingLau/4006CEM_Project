@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk, messagebox
+from tkinter.font import BOLD
 from PIL import Image, ImageTk
 from download_ebooks import download_ebooks
 from read_ebooks import read_ebooks
@@ -33,9 +34,9 @@ def store_ebooks():
     #page title & icon
     Label(store_ebooks_screen, image = store_ebooks_icon).place(x=80, y=40)
     Label(store_ebooks_screen, image = favorite_book_image).place(x=1170, y=80)
-    Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 14, "bold")).place(x=180, y = 70)
+    Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #display 20books
-    Label(store_ebooks_screen, text = txt_display_ebooks, font = ("Helvetica", 12, "bold")).place(x=80, y = 140)
+    Label(store_ebooks_screen, text = txt_display_ebooks, font = ("Helvetica", 12, BOLD)).place(x=80, y = 140)
     #Frame 
     scroll_frame = Frame(store_ebooks_screen, height=475, width=1200, borderwidth = 1, relief=SOLID)
     scroll_frame.place(x=80, y = 190)
@@ -73,14 +74,14 @@ def display_favourite_book():
         for name in favourite_book:
             row_frame = Frame(scroll_frame2, height=50, width=1165, borderwidth = 1, relief = SOLID, background = "light grey", highlightcolor="light grey")
             row_frame.grid(row=y, column=0, padx=20, pady=15)
-            Label(row_frame, text = name[0], background = "light grey",font = ("Helvetica", 12, "bold")).place(x=20, y=12)
+            Label(row_frame, text = name[0], background = "light grey",font = ("Helvetica", 12, BOLD)).place(x=20, y=12)
             Button(row_frame, text= txt_read, font = ("Helvetica", 12), width=10, height=1, cursor="hand2", command = lambda name=name: read_book(name[0])).place(x=730, y=7.5)
             Button(row_frame, text= txt_download, font = ("Helvetica", 12), width=10, height=1, cursor="hand2", command = lambda name=name: download_book(name[0])).place(x=835, y=7.5)
             Button(row_frame, text= txt_delete, font = ("Helvetica", 12), width=10, height=1, cursor="hand2", command = lambda name=name: delete_favourite_book(name[0])).place(x=940, y=7.5)
             Button(row_frame, text= txt_review, font = ("Helvetica", 12), width=10, height=1, cursor="hand2", command = lambda name=name: review_book(name[0])).place(x=1045, y=7.5)
             y += 1
     else:
-        Label(scroll_frame2, text = txt_no_favourite_book, font = ("Helvetica", 12, "bold"), foreground="grey").grid(padx=500, pady=225)
+        Label(scroll_frame2, text = txt_no_favourite_book, font = ("Helvetica", 12, BOLD), foreground="grey").grid(padx=500, pady=225)
 
 def get_favourite_book():
     global email_address
