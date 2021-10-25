@@ -1,3 +1,4 @@
+import random
 from tkinter import *
 from tkinter import messagebox
 from tkinter.font import BOLD
@@ -5,7 +6,7 @@ from PIL import Image, ImageTk
 from threading import Thread
 from datetime import date, timedelta
 import guli
-from db_conn import readFromDb, insertUpdateDeleteToDb
+from db_conn import readAllFromDb, readFromDb, insertUpdateDeleteToDb
 
 def check_in_days():
     global check_in_days_screen
@@ -31,7 +32,6 @@ def check_in_days():
     txt_download_quota = " download quota"
     txt_check_in1 = "Check in to get "
     txt_check_in = txt_check_in1+str(1)+txt_download_quota
-    txt_hey = "Hey!"
     #screen title,size, maximize windows
     check_in_days_screen.title(txt_check_in_days)
     check_in_days_screen.geometry(geometry_size)
@@ -47,9 +47,9 @@ def check_in_days():
     frame_day.place(x=100, y = 200)
     checkButton_day()
     #encourage words
-    frame_word = Frame(check_in_days_screen, height=100, width=700, borderwidth = 1, relief = SOLID)
+    frame_word = Frame(check_in_days_screen, height=100, width=850, borderwidth = 1, relief = SOLID)
     frame_word.place(x=100, y = 300)
-    lbl_word = Label(frame_word, text = txt_hey, font = ("Helvetica", 12, BOLD))
+    lbl_word = Label(frame_word, font = ("Helvetica", 12, BOLD))
     lbl_word.place(x=20, y=35)
     #total download quota
     Label(check_in_days_screen, text="Total Download Quota: ", font = ("Helvetica", 12, BOLD)).place(x=100, y = 430)
@@ -58,6 +58,7 @@ def check_in_days():
     #check in button
     btn_check_in = Button(check_in_days_screen, text= txt_check_in, font = ("Helvetica", 12, BOLD), foreground="white", background = "blue", width=40, height=1, cursor="hand2", command = check_in)
     btn_check_in.place(x=500,y=500)
+    get_word()
     Thread(target=get_check_in).start()
 
 def checkButton_day():
@@ -251,3 +252,17 @@ def check_in():
 
 def close_page():
     check_in_days_screen.destroy()
+
+def get_word():
+    digit = "0123456789"
+    
+    dbQuery = """SELECT Word 
+                 FROM dbo.CheckInWords WITH(NOLOCK)
+                 ORDER BY Id ASC
+                 OFFSET """+random.choice(digit)+""" ROWS
+                 FETCH NEXT 1 ROWS ONLY"""
+    
+    result = readAllFromDb(dbQuery)
+    if result != None:
+        for word in result:
+            lbl_word.config(text=word[0])
