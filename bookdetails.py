@@ -7,8 +7,9 @@ from read_ebooks import read_ebooks
 from tkinter import *
 from tkinter import scrolledtext, messagebox
 from PIL import Image, ImageTk
-from db_conn import readFromDb
+from db_conn import insertUpdateDeleteToDb, readFromDb
 from threading import Thread
+from store_ebooks import store_ebooks
 
 def bookdetails():
     global book_details_screen
@@ -61,12 +62,12 @@ def bookdetails():
     #read button
     Button(book_details_screen, text= txt_read, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = read_book).place(x=80,y=580)
     #store button
-    Button(book_details_screen, text= txt_store, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = close_page).place(x=420,y=580)
+    Button(book_details_screen, text= txt_store, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = store_book).place(x=420,y=580)
     #review button
     Button(book_details_screen, text= txt_review, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = review_book).place(x=760,y=580)
     #view comment button
-    Button(book_details_screen, text= txt_comment, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = close_page).place(x=1100,y=580)
-    
+    Button(book_details_screen, text= txt_comment, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = comment).place(x=1100,y=580)
+    #get book details
     Thread(target= get_book_details).start()
 
 def close_page():
@@ -75,6 +76,58 @@ def close_page():
 def read_book():
     guli.GuliVariable("read_book").setValue(guli.GuliVariable("book_name").get())
     read_ebooks()
+
+def check_store_book():
+    global book_name
+    global email_address
+    book_name = check_single_quote(guli.GuliVariable("book_name").get())
+    email_address = guli.GuliVariable("email_add").get()
+    dbQuery = """SELECT isActive 
+                 FROM dbo.UserBookStore WITH(NOLOCK)
+                 WHERE UserId = (
+                                    SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
+                                )
+                 AND BookId = (
+                                    SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name+"""' AND isActive = 1
+                              )"""
+    result = readFromDb(dbQuery)
+    return result
+
+def store_book():
+    global favourite_result
+    store = check_store_book()
+    if store == None:
+        dbQuery = """INSERT INTO [dbo].[UserBookStore]([UserId],[BookId],[isActive])
+                     SELECT U.Id, B.Id, 1
+                     FROM dbo.Users U WITH(NOLOCK)
+                     INNER JOIN dbo.Books B WITH(NOLOCK) ON B.Name = N'"""+book_name+"""' AND B.isActive = 1
+                     WHERE email = N'"""+email_address+"""'"""
+        favourite_result = insertUpdateDeleteToDb(dbQuery)
+    elif store[0] == 0:
+        dbQuery = """UPDATE dbo.UserBookStore
+                     SET isActive = 1
+                     WHERE  UserId = (
+                                        SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
+                                     )
+                     AND BookId = (
+                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name+"""' AND isActive = 1
+                                  )"""
+        favourite_result = insertUpdateDeleteToDb(dbQuery)
+    elif store[0] == 1:
+        messagebox.showinfo("Done Favourite", "You have favourite this e-book before. Please favourite another e-book. Thanks", parent=book_details_screen)
+        return
+    
+    if favourite_result == 1:
+        messagebox.showinfo("Favourite Book", "E-Book added to favourite successfully.", parent = book_details_screen)
+        redirect_to_favourite_book()
+    else:
+        messagebox.showerror("Failed Favourite", "E-Book Failed to favourite. Please try again.", parent = book_details_screen)
+
+def redirect_to_favourite_book():
+    redirect = messagebox.askyesno("Redirect to Favourite Page", "Do you want to redirect to Favourite E-Book Page?", parent = book_details_screen)
+    if redirect:
+        store_ebooks()
+        close_page()
 
 def review_book():
     book_name = check_single_quote(guli.GuliVariable("book_name").get())
