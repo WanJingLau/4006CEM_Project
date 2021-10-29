@@ -12,7 +12,6 @@ from db_conn import readFromDb
 from store_ebooks import store_ebooks
 from upload_ebooks import upload_ebooks
 import guli
-from helpers import home
 
 def homepage():
     global homepage_screen
