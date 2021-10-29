@@ -23,7 +23,7 @@ def store_ebooks():
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     #text declaration
     txt_store_ebooks = "Favourite E-books"
-    txt_display_ebooks = "This is a storage of able to favourite more than 20 e-books."
+    txt_display_ebooks = "Here is your favourite books and you can add more than 20 e-books."
     geometry_size = "1366x768"
     #screen size, maximize screen
     store_ebooks_screen.title(txt_store_ebooks)
