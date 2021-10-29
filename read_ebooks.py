@@ -16,6 +16,10 @@ def read_ebooks():
     read_ebooks_screen = Toplevel()
     read_ebooks_icon = ImageTk.PhotoImage(Image.open("book_reading.png").resize((80, 80), Image.ANTIALIAS))
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    #home icon
+    global home_icon
+    home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
+    Button(read_ebooks_screen, image = home_icon, cursor="hand2").place(x=1400,y=15)
     #text declaration
     txt_read_ebooks = "Read E-books"
     geometry_size = "1366x768"
