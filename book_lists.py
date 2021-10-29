@@ -18,6 +18,7 @@ def book_lists():
     global book_lists_title
     global scroll_canvas
     global scroll_frame2
+    global home_icon
     book_lists_screen = Toplevel()
     action_adventure_icon = ImageTk.PhotoImage(Image.open("action_adventure_small.png").resize((80, 80), Image.ANTIALIAS))
     romance_icon = ImageTk.PhotoImage(Image.open("romance_small.png").resize((80, 80), Image.ANTIALIAS))
@@ -25,6 +26,9 @@ def book_lists():
     horror_icon = ImageTk.PhotoImage(Image.open("horror_small.png").resize((80, 80), Image.ANTIALIAS))
     search_icon = ImageTk.PhotoImage(Image.open("search_small.png").resize((80, 80), Image.ANTIALIAS))   
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
+    #home button
+    home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
+    Button(book_lists_screen, image = home_icon, cursor="hand2").place(x=1400,y=15)
     #text declaration
     geometry_size = "1366x768"
     book_lists_title = guli.GuliVariable("book_category").get()
