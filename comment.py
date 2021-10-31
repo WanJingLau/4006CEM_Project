@@ -16,7 +16,7 @@ def comment():
     comment_screen = Toplevel()
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     comment_icon = ImageTk.PhotoImage(Image.open("comment_icon.png").resize((80, 80), Image.ANTIALIAS))
-    comment_image = ImageTk.PhotoImage(Image.open("comment_image.png").resize((250, 190), Image.ANTIALIAS))
+    comment_image = ImageTk.PhotoImage(Image.open("comment_image.png").resize((230, 170), Image.ANTIALIAS))
     #home icon
     global home_icon
     home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
@@ -33,7 +33,7 @@ def comment():
     #page title, icon
     Label(comment_screen, image=comment_icon).place(x=80, y=40)
     Label(comment_screen, text = txt_comment, font = ("Helvetica", 14, BOLD)).place(x=180, y=70)
-    Label(comment_screen, image = comment_image).place(x=1090, y=80)
+    Label(comment_screen, image = comment_image).place(x=1090, y=18)
     #Frame 
     scroll_frame = Frame(comment_screen, height=475, width=1200, borderwidth = 1, relief=SOLID)
     scroll_frame.place(x=80, y = 180)
