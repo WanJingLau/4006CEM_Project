@@ -119,10 +119,11 @@ def download_book(book_name):
 def delete_favourite_book(book_name):
     delete = messagebox.askyesno("Delete E-Books","Are you sure you want to delete this e-book from favourite?", parent = store_ebooks_screen)
     if delete:
+        bookname = check_single_quote(book_name)
         dbQuery = """UPDATE dbo.UserBookStore 
                      SET isActive = 0 
                      WHERE BookId = (
-                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+book_name+"""'
+                                        SELECT Id FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"""+bookname+"""'
                                     )
                      AND UserId = (
                                     SELECT Id FROM dbo.Users WITH(NOLOCK) WHERE email = N'"""+email_address+"""'
