@@ -3,7 +3,7 @@ from tkinter import ttk, filedialog, scrolledtext, messagebox
 from tkinter.font import BOLD
 from PIL import Image, ImageTk
 from db_conn import insertUpdateBookToDb, readFromDb
-from helpers import check_single_quote
+from helpers import check_front_end_space, check_single_quote
 
 def upload_ebooks():
     global upload_ebooks_screen
@@ -101,7 +101,7 @@ def book_verify():
 
 def check_book_exist():
     global new_book_name
-    new_book_name = check_single_quote(book_name.get())
+    new_book_name = check_single_quote(check_front_end_space(book_name.get()))
     dbQuery = "SELECT TOP 1 1 FROM dbo.Books WITH(NOLOCK) WHERE Name = N'"+new_book_name+"' AND isActive = 1"
     result = readFromDb(dbQuery)
     return result

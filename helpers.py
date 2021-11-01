@@ -16,3 +16,7 @@ def check_question_mark(string):
         return string.replace("?", "")
     else:
         return string
+
+def check_front_end_space(string):
+    newstring = string.lstrip()
+    return newstring.rstrip()
