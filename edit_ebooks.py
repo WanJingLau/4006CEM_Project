@@ -138,13 +138,13 @@ def edit_book():
     new_author = check_single_quote(author.get())
     new_summary = check_single_quote(summary_scrolledText.get("1.0", "end-1c"))
     dbQuery = """UPDATE dbo.Books
-                 SET Author = N'"""+new_author+"""'
-                 AND Summary = N'"""+new_summary+"""' """
+                 SET Author = N'"""+new_author+"""',
+                     Summary = N'"""+new_summary+"""' """
     
     if lbl_no_file_chosen.cget("text") != txt_no_file_chosen:
         with open(lbl_no_file_chosen.cget("text"), 'rb') as f:
             bindata = f.read()
-        dbQuery = dbQuery + "AND BookContent = ? WHERE Name = N'"+book_name+"'"
+        dbQuery = dbQuery + ", BookContent = ? WHERE Name = N'"+book_name+"'"
         result = insertUpdateBookToDb(dbQuery, bindata)
     else:
         dbQuery = dbQuery + "WHERE Name = N'"+book_name+"'"
