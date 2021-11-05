@@ -31,7 +31,7 @@ def bookdetails():
     txt_book_details = "Book Details"
     geometry_size = "1366x768"
     txt_read = "Read"
-    txt_store = "Store"
+    txt_store = "Favourite"
     txt_review = "Review"
     txt_comment = "View Comment"
     txt_book_name = "Book Name:"
