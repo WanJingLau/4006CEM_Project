@@ -65,7 +65,7 @@ def bookdetails():
     summary_scrolledText.place(x=80,y=290)  
     #read button
     Button(book_details_screen, text= txt_read, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = read_book).place(x=80,y=580)
-    #store button
+    #favourite button
     Button(book_details_screen, text= txt_store, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = store_book).place(x=420,y=580)
     #review button
     Button(book_details_screen, text= txt_review, font = ("Helvetica", 12, BOLD), width=16, height=2, cursor="hand2", command = review_book).place(x=760,y=580)
