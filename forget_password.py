@@ -60,18 +60,19 @@ def entry(entry):
     messagebox.showerror("Failed Reset", entry, parent = forget_pw_screen)
 
 def reset_password():
-    email_info = email.get().lower()
-    new_pw = pw_generator()
-    dbQuery = """UPDATE dbo.Users 
+    try:
+        email_info = email.get().lower()
+        new_pw = pw_generator()
+        dbQuery = """UPDATE dbo.Users 
                  SET password_hash = HASHBYTES('SHA2_512', '"""+new_pw+"""')
                  WHERE email = N'"""+email_info+"""'"""
     
-    result = insertUpdateDeleteToDb(dbQuery)
-    if result == 1:
-        email_entry.delete(0, END)
-        send_email(email_info, new_pw)
-        reset_success()
-    else:
+        result = insertUpdateDeleteToDb(dbQuery)
+        if result == 1:
+            email_entry.delete(0, END)
+            send_email(email_info, new_pw)
+            reset_success()
+    except:    
         entry("Reset failed. Please try again.")
 
 def pw_generator():

@@ -17,10 +17,7 @@ def comment():
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
     comment_icon = ImageTk.PhotoImage(Image.open("comment_icon.png").resize((80, 80), Image.ANTIALIAS))
     comment_image = ImageTk.PhotoImage(Image.open("comment_image.png").resize((230, 170), Image.ANTIALIAS))
-    #home icon
-    global home_icon
-    home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
-    Button(comment_screen, image = home_icon, cursor="hand2").place(x=1400,y=15)
+    
     #text declaration
     txt_comment = "Comments"
     geometry_size = "1366x768"
