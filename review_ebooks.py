@@ -19,10 +19,7 @@ def review_ebooks():
     book_name = StringVar()
     review_image = ImageTk.PhotoImage(Image.open("review_image.png").resize((580, 350), Image.ANTIALIAS))
     review_icon = ImageTk.PhotoImage(Image.open("review.png").resize((80, 80), Image.ANTIALIAS))
-    #home icon
-    global home_icon
-    home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
-    Button(review_screen, image = home_icon, cursor="hand2").place(x=1400,y=15)
+
     #text declaration
     txt_review = "Review E-Book"
     geometry_size = "1366x768"

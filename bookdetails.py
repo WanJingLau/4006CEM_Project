@@ -23,15 +23,12 @@ def bookdetails():
     book_categories_icon = ImageTk.PhotoImage(Image.open("bookcategories.png").resize((80, 80), Image.ANTIALIAS))
     book_details_image = ImageTk.PhotoImage(Image.open("book_details_image.png").resize((330, 210), Image.ANTIALIAS))
     back_icon = ImageTk.PhotoImage(Image.open("back.png").resize((30, 30), Image.ANTIALIAS))
-    #home button
-    global home_icon
-    home_icon = ImageTk.PhotoImage(Image.open("homepage.png").resize((30, 30), Image.ANTIALIAS))
-    Button(book_details_screen, image = home_icon, cursor="hand2").place(x=1400,y=15)
+
     #text declaration
     txt_book_details = "Book Details"
     geometry_size = "1366x768"
     txt_read = "Read"
-    txt_store = "Store"
+    txt_store = "Favourite"
     txt_review = "Review"
     txt_comment = "View Comment"
     txt_book_name = "Book Name:"
