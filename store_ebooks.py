@@ -33,7 +33,7 @@ def store_ebooks():
     Button(store_ebooks_screen, image = back_icon, cursor="hand2", command = close_page).place(x=15,y=15)
     #page title & icon
     Label(store_ebooks_screen, image = store_ebooks_icon).place(x=80, y=40)
-    Label(store_ebooks_screen, image = favorite_book_image).place(x=1170, y=80)
+    Label(store_ebooks_screen, image = favorite_book_image).place(x=1170, y=35)
     Label(store_ebooks_screen, text = txt_store_ebooks, font = ("Helvetica", 14, BOLD)).place(x=180, y = 70)
     #display 20books
     Label(store_ebooks_screen, text = txt_display_ebooks, font = ("Helvetica", 12, BOLD)).place(x=80, y = 140)
